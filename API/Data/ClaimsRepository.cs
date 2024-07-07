@@ -22,6 +22,8 @@ namespace API.Data
         {
             return await _context.Claims
                 .Include(c => c.Patient)
+                .Include(c => c.Reimbursements)
+                .Include(c => c.Payments).ThenInclude(p => p.PaymentMethod)
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
 
@@ -29,6 +31,8 @@ namespace API.Data
         {
             return await _context.Claims
                 .Include(c => c.Patient)
+                .Include(c => c.Reimbursements)
+                .Include(c => c.Payments).ThenInclude(p => p.PaymentMethod)           
                 .SingleOrDefaultAsync(c => c.ClaimNumber == claimNumber);
         }
 
@@ -42,17 +46,36 @@ namespace API.Data
 
         public async Task<List<Claim>> GetUnpaidClaims()
         {
-           throw new NotImplementedException();
+           var claims = await _context.Claims
+              .Include(c => c.Payments)
+              .ToListAsync();
+
+            return claims.Where(c => c.Payments.Sum(p => p.Amount) < c.AmountOwed).ToList();
         }
 
-        public async Task AddClaim(Claim claim)
+        public void AddClaim(Claim claim)
         {
-            await _context.Claims.AddAsync(claim);
+            _context.Claims.Add(claim);
         }
 
-        public async Task AddReimbursement(Reimbursement reimbursement)
+        public async Task<Reimbursement> GetReimbursementById(int id)
         {
-            await _context.Reimbursements.AddAsync(reimbursement);
+            return await _context.Reimbursements.FindAsync(id);
+        }
+
+        public void AddReimbursement(Reimbursement reimbursement)
+        {
+            _context.Reimbursements.Add(reimbursement);
+        }
+
+        public void RemoveReimbursement(Reimbursement reimbursement)
+        {
+            _context.Remove(reimbursement);
+        }         
+
+        public void AddPayment(Payment payment)
+        {
+            _context.Payments.Add(payment);
         }
     }
 }

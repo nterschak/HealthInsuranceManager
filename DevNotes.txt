@@ -14,3 +14,6 @@ In API.csproj:
 
 Set up source control
 On Github.com, create a new repository
+Use "git init" to initialize local git repository
+Use "git remote add origin" to link local repository to github repository
+Use "git branch -M main" to use main branch instead of master if needed

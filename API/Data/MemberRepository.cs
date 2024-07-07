@@ -36,9 +36,9 @@ namespace API.Data
                 .FirstOrDefaultAsync(m => m.FirstName == firstName && m.LastName == lastName);
         }
 
-        public async Task AddMember(Member member)
+        public void AddMember(Member member)
         {
-            await _context.Members.AddAsync(member);
+            _context.Members.Add(member);
         }
     }
 }

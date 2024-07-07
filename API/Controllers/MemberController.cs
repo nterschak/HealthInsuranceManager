@@ -35,7 +35,7 @@ namespace API.Controllers
             if (await _uow.MemberRepository.GetByName(member.FirstName, member.LastName) != null)
                 return BadRequest("Member by same name already exists");
 
-            await _uow.MemberRepository.AddMember(member);
+            _uow.MemberRepository.AddMember(member);
             if (await _uow.Complete())
                 return CreatedAtAction(nameof(GetMemberById), new {Id = member.Id}, member);
 

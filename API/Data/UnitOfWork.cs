@@ -13,6 +13,7 @@ namespace API.Data
 
         public IMemberRepository MemberRepository => new MemberRepository(_context);
         public IClaimsRepository ClaimsRepository => new ClaimsRepository(_context);
+        public IPaymentRepository PaymentRepository => new PaymentRepository(_context);
 
         public async Task<bool> Complete()
         {

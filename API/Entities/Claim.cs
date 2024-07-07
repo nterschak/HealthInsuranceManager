@@ -14,5 +14,6 @@ namespace API.Entities
         public int PatientId { get; set; }
         public Member Patient { get; set; }
         public List<Reimbursement> Reimbursements { get; set; }
+        public List<Payment> Payments { get; set; }
     }
 }

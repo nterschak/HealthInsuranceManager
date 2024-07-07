@@ -4,6 +4,7 @@ namespace API.Interfaces
     {
         IMemberRepository MemberRepository { get; }
         IClaimsRepository ClaimsRepository { get; }
+        IPaymentRepository PaymentRepository { get; }
         Task<bool> Complete();
         bool HasChanges();
     }

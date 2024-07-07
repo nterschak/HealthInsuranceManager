@@ -7,6 +7,6 @@ namespace API.Interfaces
         Task<List<Member>> GetAll();
         Task<Member> GetById(int id);
         Task<Member> GetByName(string firstName, string lastName);
-        Task AddMember(Member member);      
+        void AddMember(Member member);      
     }
 }

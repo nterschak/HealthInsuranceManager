@@ -9,7 +9,10 @@ namespace API.Interfaces
         Task<Claim> GetByClaimNumber(string claimNumber);
         Task<List<Claim>> GetForMember(int memberId);
         Task<List<Claim>> GetUnpaidClaims();
-        Task AddClaim(Claim claim);
-        Task AddReimbursement(Reimbursement reimbursement);
+        void AddClaim(Claim claim);
+        Task<Reimbursement> GetReimbursementById(int id);
+        void AddReimbursement(Reimbursement reimbursement);
+        void RemoveReimbursement(Reimbursement reimbursement);
+        void AddPayment(Payment payment);
     }
 }
