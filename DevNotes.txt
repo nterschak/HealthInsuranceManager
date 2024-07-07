@@ -1,0 +1,16 @@
+Creating the dotnet API
+dotnet new sln
+dotnet new webapi -controllers -n API
+dotnet sln add API
+
+Add Entity Framework to the project
+-Use nuget gallery to add package "Microsoft.EntityFrameworkCore.Sqlite"
+-Use nuget gallery to add package "Microsoft.EntityFrameworkCore.Design" (for adding migrations)
+-Use nuget gallery to add package "Microsoft.EntityFrameworkCore.Tools"
+
+Configure C# compile to not use nullable reference types
+In API.csproj:
+<Nullable>disable</Nullable>
+
+Set up source control
+On Github.com, create a new repository
