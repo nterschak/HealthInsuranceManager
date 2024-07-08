@@ -20,3 +20,6 @@ Use "git branch -M main" to use main branch instead of master if needed
 
 Create the angular application
 In the solution folder, execute "ng new client" on the command line
+
+Add ngx-bootstrap to the angular application
+execute "ng add ngx-bootstrap" in the terminal
