@@ -23,3 +23,7 @@ In the solution folder, execute "ng new client" on the command line
 
 Add ngx-bootstrap to the angular application
 execute "ng add ngx-bootstrap" in the terminal
+
+Add font-awesome to the angular application
+execute "npm install font-awesome"
+Add style to angular.json file
