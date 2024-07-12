@@ -57,5 +57,18 @@ namespace API.Controllers
 
             return BadRequest("Problem updating member");
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> RemoveMember(int id)
+        {
+            var member = await _uow.MemberRepository.GetById(id);
+            if (member == null) return NotFound();
+
+            _uow.MemberRepository.RemoveMember(member);
+
+            if (await _uow.Complete()) return NoContent();
+
+            return BadRequest("Problem deleting member");
+        }
     }
 }

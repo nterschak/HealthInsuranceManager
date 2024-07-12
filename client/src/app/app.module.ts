@@ -12,6 +12,8 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { FormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ToastrModule } from 'ngx-toastr';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { ToastrModule } from 'ngx-toastr';
     NavComponent,
     ClaimListComponent,
     HomeComponent,
-    MemberEditComponent
+    MemberEditComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { ToastrModule } from 'ngx-toastr';
     BsDatepickerModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
-    })
+    }),
+    ModalModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

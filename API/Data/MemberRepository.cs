@@ -40,5 +40,10 @@ namespace API.Data
         {
             _context.Members.Add(member);
         }
+
+        public void RemoveMember(Member member)
+        {
+            _context.Members.Remove(member);
+        }
     }
 }

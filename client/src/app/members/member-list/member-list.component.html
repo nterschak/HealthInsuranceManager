@@ -16,9 +16,15 @@
         <td>
           <button
             routerLink="edit/{{member.id}}"
-            class="btn btn-secondary"
+            class="btn btn-secondary me-2"
           >
           <i class="fa fa-pencil-square-o"></i>
+          </button>
+          <button
+            (click)="removeMember(member)"
+            class="btn btn-danger"
+          >
+            <i class="fa fa-trash"></i>
           </button>
         </td>
       </tr>

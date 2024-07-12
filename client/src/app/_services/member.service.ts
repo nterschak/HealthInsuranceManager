@@ -31,4 +31,8 @@ export class MemberService {
       dateOfBirth: member.dateOfBirth.toJSON().slice(0, 10)
     });
   }
+
+  removeMember(memberId: number) {
+    return this.http.delete(this.baseUrl + 'member/' + memberId);
+  }
 }
