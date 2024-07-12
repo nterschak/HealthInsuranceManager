@@ -20,7 +20,11 @@ export class MemberService {
   }
 
   addMember(member: Member) {
-    return this.http.post(this.baseUrl + 'member', member);
+    return this.http.post(this.baseUrl + 'member', {
+      firstName: member.firstName,
+      lastName: member.lastName,
+      dateOfBirth: member.dateOfBirth.toJSON().slice(0, 10)
+    });
   }
 
   updateMember(member: Member) {

@@ -14,6 +14,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
+import { MemberAddComponent } from './member-add/member-add.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.c
     ClaimListComponent,
     HomeComponent,
     MemberEditComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    MemberAddComponent
   ],
   imports: [
     BrowserModule,

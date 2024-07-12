@@ -1,0 +1,48 @@
+<h2 class="text-center">Add New Member</h2>
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <form *ngIf="member" #editForm="ngForm" (ngSubmit)="submit()">
+            <div class="form-group mb-3">
+                <label for="firstName">First Name</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="First Name"
+                    required
+                    [(ngModel)]="member.firstName"
+                    name="firstName"
+                >
+            </div>
+        
+            <div class="form-group mb-3">
+                <label for="lastName">Last Name</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Last Name"
+                    required
+                    [(ngModel)]="member.lastName"
+                    name="lastName"
+                >
+            </div>
+        
+            <div class="form-group mb-3">
+                <label for="dateOfBirth">Date Of Birth</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Date of Birth"
+                    required
+                    bsDatepicker
+                    [(ngModel)]="member.dateOfBirth"
+                    name="dateOfBirth"
+                >
+            </div>
+            <button type="submit" class="btn btn-success" [disabled]="!editForm.dirty">Submit</button>
+        </form>
+    </div>
+    <div class="col-4"></div>
+</div>
+
+
