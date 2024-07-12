@@ -5,14 +5,14 @@
         <th scope="col">First Name</th>
         <th scope="col">Last Name</th>
         <th scope="col">Date Of Birth</th>
-        <th></th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let member of members">
         <td>{{member.firstName}}</td>
         <td>{{member.lastName}}</td>
-        <td>{{member.dateOfBirth | date}}</td>
+        <td>{{member.dateOfBirth | date:'longDate'}}</td>
         <td>
           <button
             routerLink="edit/{{member.id}}"

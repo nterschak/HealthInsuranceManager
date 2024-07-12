@@ -19,7 +19,10 @@ namespace API.Data
 
         public async Task<List<Member>> GetAll()
         {
-            return await _context.Members.AsNoTracking().ToListAsync();
+            return await _context.Members
+            .AsNoTracking()
+            .OrderBy(m => m.DateOfBirth)
+            .ToListAsync();
         }
 
         public async Task<Member> GetById(int id)

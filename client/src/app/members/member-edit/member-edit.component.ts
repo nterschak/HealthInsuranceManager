@@ -30,8 +30,11 @@ export class MemberEditComponent implements OnInit {
   submit() {
     if (this.member) {
       this.memberService.updateMember(this.member).subscribe({
-        next: _ => this.toastrService.success('Member updated!'),
-        error: _ => this.toastrService.error('Something went wrong.')
+        next: () => {
+          this.toastrService.success('Member updated!');
+          this.editForm?.reset(this.member);
+        },
+        error: () => this.toastrService.error('Something went wrong.')
       });
     }
   }
