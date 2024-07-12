@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Member } from '../_models/member';
-import { MemberService } from '../_services/member.service';
+import { Member } from '../../_models/member';
+import { MemberService } from '../../_services/member.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
