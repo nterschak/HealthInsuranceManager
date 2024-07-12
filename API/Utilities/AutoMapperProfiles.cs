@@ -1,3 +1,4 @@
+using API.Entities;
 using AutoMapper;
 
 namespace API.Utilities
@@ -6,7 +7,7 @@ namespace API.Utilities
     {
         public AutoMapperProfiles()
         {
-
+            CreateMap<Member, Member>();
         }
     }
 }

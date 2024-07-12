@@ -14,4 +14,21 @@ export class MemberService {
   getMembers() {
     return this.http.get<Member[]>(this.baseUrl + 'member');
   }
+
+  getMember(id: number) {
+    return this.http.get<Member>(this.baseUrl + 'member/' + id);
+  }
+
+  addMember(member: Member) {
+    return this.http.post(this.baseUrl + 'member', member);
+  }
+
+  updateMember(member: Member) {
+    return this.http.put(this.baseUrl + 'member', {
+      id: member.id,
+      firstName: member.firstName,
+      lastName: member.lastName,
+      dateOfBirth: member.dateOfBirth.toJSON().slice(0, 10)
+    });
+  }
 }

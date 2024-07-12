@@ -1,5 +1,6 @@
 using API.Entities;
 using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -9,10 +10,12 @@ namespace API.Controllers
     public class MemberController : ControllerBase
     {
         private readonly IUnitOfWork _uow;
+        private readonly IMapper _mapper;
 
-        public MemberController(IUnitOfWork uow)
+        public MemberController(IUnitOfWork uow, IMapper mapper)
         {
             _uow = uow;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -40,6 +43,19 @@ namespace API.Controllers
                 return CreatedAtAction(nameof(GetMemberById), new {Id = member.Id}, member);
 
             return BadRequest("Problem adding new member");
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateMember(Member updatedMember)
+        {
+            var member = await _uow.MemberRepository.GetById(updatedMember.Id);
+            if (member == null) return NotFound();
+
+            _mapper.Map(updatedMember, member);
+
+            if (await _uow.Complete()) return NoContent();
+
+            return BadRequest("Problem updating member");
         }
     }
 }
