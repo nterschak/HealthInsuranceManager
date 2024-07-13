@@ -9,6 +9,8 @@ import { ClaimService } from 'src/app/_services/claim.service';
 })
 export class ClaimListComponent implements OnInit {
   claims?: Claim[];
+  selectedClaimId: number = 0;
+  selectedClaim?: Claim;
 
   constructor(private claimService: ClaimService) {}
 
@@ -16,5 +18,9 @@ export class ClaimListComponent implements OnInit {
     this.claimService.getClaims().subscribe({
       next: claims => this.claims = claims
     })
+  }
+
+  updateSelectedClaim(id: number) {
+    this.selectedClaimId = id;
   }
 }

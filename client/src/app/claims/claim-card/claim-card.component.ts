@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Claim } from 'src/app/_models/claim';
 
 @Component({
@@ -8,4 +8,11 @@ import { Claim } from 'src/app/_models/claim';
 })
 export class ClaimCardComponent {
   @Input() claim?: Claim;
+  @Input() isSelected = false;
+  @Output() selected = new EventEmitter<number>();
+
+  selectClaim() {
+    if (this.claim?.id)
+    this.selected.emit(this.claim.id);
+  }
 }
