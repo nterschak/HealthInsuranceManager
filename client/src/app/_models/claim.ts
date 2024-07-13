@@ -1,3 +1,7 @@
+import { Member } from "./member";
+import { Payment } from "./payment";
+import { Reimbursement } from "./reimbursement";
+
 export interface Claim {
     id: number;
     claimNumber: string;
@@ -10,4 +14,7 @@ export interface Claim {
     networkStatus: string;
     patientId: number;
     patientName: string;
+    patient: Member;
+    reimbursements: Reimbursement[];
+    payments: Payment[];
 }
