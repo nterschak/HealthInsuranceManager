@@ -15,6 +15,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
 import { MemberAddComponent } from './members/member-add/member-add.component';
+import { ClaimCardComponent } from './claims/claim-card/claim-card.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MemberAddComponent } from './members/member-add/member-add.component';
     HomeComponent,
     MemberEditComponent,
     ConfirmDialogComponent,
-    MemberAddComponent
+    MemberAddComponent,
+    ClaimCardComponent
   ],
   imports: [
     BrowserModule,

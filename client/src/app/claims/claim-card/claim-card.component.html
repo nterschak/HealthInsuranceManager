@@ -1,0 +1,31 @@
+<div *ngIf="claim" class="card text-bg-light my-4" style="width: 30rem;">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-6">Claim #{{claim.claimNumber}}</div>
+            <div class="col-6" style="text-align: right;">{{claim.dateVisited | date:'shortDate'}}</div>
+        </div>   
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{claim.patientName}}</h5>
+        <hr>
+        <dl class="mb-0">
+            <div class="row" style="text-align: center;">
+                <div class="col-4">
+                    <dt>Billed</dt>
+                    <dd>{{claim.amountBilled | currency}}</dd>
+                </div>
+    
+                <div class="col-4">
+                    <dt>Deductible</dt>
+                    <dd>{{claim.amountDeductible | currency}}</dd>    
+                </div>
+
+                <div class="col-4">
+                    <dt>Owed</dt>
+                    <dd>{{claim.amountOwed | currency}}</dd>    
+                </div>                
+            </div>
+        </dl>
+    </div>
+    <div class="card-footer">{{claim.claimType}} - {{claim.networkStatus}}</div>
+</div>
