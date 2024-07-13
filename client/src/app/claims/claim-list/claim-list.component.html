@@ -1,1 +1,12 @@
-<p>claim-list works!</p>
+<h2>Claims</h2>
+<dl *ngFor="let claim of claims">
+    <h3># {{claim.claimNumber}}</h3>
+    <dt>Patient</dt>
+    <dd>{{claim.patientName}}</dd>
+
+    <dt>Amount Owed</dt>
+    <dd>{{claim.amountOwed}}</dd>
+
+    <dt>Date Visited</dt>
+    <dd>{{claim.dateVisited | date}}</dd>
+</dl>

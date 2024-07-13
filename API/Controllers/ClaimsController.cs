@@ -1,3 +1,4 @@
+using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -16,19 +17,19 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Claim>> GetAllClaims()
+        public async Task<List<ClaimDto>> GetAllClaims()
         {
             return await _uow.ClaimsRepository.GetAll();
         }
 
         [HttpGet("unpaid")]
-        public async Task<List<Claim>> GetUnpaidClaims()
+        public async Task<List<ClaimDto>> GetUnpaidClaims()
         {
             return await _uow.ClaimsRepository.GetUnpaidClaims();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Claim>> GetById(int id)
+        public async Task<ActionResult<ClaimDto>> GetById(int id)
         {
             var claim = await _uow.ClaimsRepository.GetById(id);
             if (claim == null) return NotFound();
@@ -36,7 +37,7 @@ namespace API.Controllers
         }
 
         [HttpGet("claim-number/{claimNumber}")]
-        public async Task<ActionResult<Claim>> GetByClaimNumber(string claimNumber)
+        public async Task<ActionResult<ClaimDto>> GetByClaimNumber(string claimNumber)
         {
             var claim = await _uow.ClaimsRepository.GetByClaimNumber(claimNumber);
             if (claim == null) return NotFound();

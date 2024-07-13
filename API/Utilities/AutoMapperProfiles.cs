@@ -1,3 +1,4 @@
+using API.DTOs;
 using API.Entities;
 using AutoMapper;
 
@@ -8,6 +9,8 @@ namespace API.Utilities
         public AutoMapperProfiles()
         {
             CreateMap<Member, Member>();
+            CreateMap<Claim, ClaimDto>()
+                .ForMember(c => c.PatientName, c => c.MapFrom(c => c.Patient.FirstName + " " + c.Patient.LastName));
         }
     }
 }
