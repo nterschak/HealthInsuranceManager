@@ -1,0 +1,32 @@
+<div *ngIf="reimbursement" class="card m-3" style="width: 25rem"
+    [ngClass]="reimbursement.dateReceived ? 'border-success' : 'border-warning'">
+    <div class="card-header">
+        Submitted on {{reimbursement.dateSubmitted | date:'shortDate'}}
+    </div>
+    <div class="card-body">
+        <div class="row text-center">
+            <div class="col-6">
+                <dl class="mb-0">
+                    <dt>Amount</dt>
+                    <dd>{{reimbursement.amount}}</dd>
+                </dl>
+            </div>
+            <div class="col-6 mt-2">
+                <button
+                    class="btn btn-primary"
+                    [disabled]="reimbursement.dateReceived"
+                >Mark As Received</button>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div *ngIf="reimbursement.dateReceived">
+            <i class="fa fa-check"></i>
+            Received on {{reimbursement.dateReceived | date:'shortDate'}}
+        </div>
+        <div *ngIf="!reimbursement.dateReceived">
+            <i class="fa fa-clock-o"></i>
+            Awaiting Approval
+        </div>
+    </div>
+</div>

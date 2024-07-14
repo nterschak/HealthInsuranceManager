@@ -22,5 +22,8 @@ export class ClaimListComponent implements OnInit {
 
   updateSelectedClaim(id: number) {
     this.selectedClaimId = id;
+    this.claimService.getClaim(id).subscribe({
+      next: claim => this.selectedClaim = claim
+    })
   }
 }

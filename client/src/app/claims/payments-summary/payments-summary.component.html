@@ -1,0 +1,23 @@
+<div class="m-3">
+    <p *ngIf="payments.length == 0">No payments have been made for this claim</p>
+    <table *ngIf="payments.length > 0" class="table">
+        <thead>
+            <tr>
+                <th>Date Paid</th>
+                <th>Payment Method</th>
+                <th>Amount</th>            
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let payment of payments">
+                <td>{{payment.datePaid | date:'shortDate'}}</td>
+                <td>{{payment.paymentMethod.description}} - {{payment.paymentMethod.lastFourDigits}}</td>
+                <td>{{payment.amount | currency}}</td>            
+            </tr>
+            <tr style="font-weight: bold;">
+                <td colspan="2">Total</td>
+                <td>{{total}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

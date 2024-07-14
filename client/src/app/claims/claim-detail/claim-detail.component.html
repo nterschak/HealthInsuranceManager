@@ -1,0 +1,66 @@
+<div *ngIf="claim" class="m-4">
+    <div class="card m-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-6">
+                    Claim #{{claim.claimNumber}}
+                </div>
+                <div class="col-6" style="text-align: right;">
+                    {{claim.patientName}}
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    <ul>
+                        <li style="font-style: italic;">
+                            {{claim.claimType}}
+                        </li>                        
+                        <li>
+                            Visited on {{claim.dateVisited | date}}
+                        </li>
+                        <li>
+                            Processed on {{claim.dateProcessed | date}}
+                        </li>
+                        <li>
+                            {{claim.networkStatus}}
+                            <i *ngIf="claim.networkStatus == 'In Network'" class="fa fa-check"></i>                            
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-6">
+                            <div><strong>Billed:</strong></div>
+                            <div><strong>Deductible:</strong></div>
+                            <div><strong>Owed:</strong></div>
+                        </div>
+                        <div class="col-6" style="text-align: right;">
+                            <div>{{claim.amountBilled | currency}}</div>
+                            <div>{{claim.amountDeductible | currency}}</div>
+                            <div>{{claim.amountOwed | currency}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <h5>Reimbursements</h5>
+        <p *ngIf="claim.reimbursements.length == 0">No reimbursements have been submitted for this claim</p>
+        <app-reimbursement-detail
+            *ngFor="let reimbursement of claim?.reimbursements"
+            [reimbursement]="reimbursement"
+        >
+        </app-reimbursement-detail>
+        <button class="btn btn-primary ms-3">Add Reimbursement</button>     
+    </div>
+
+    <div class="mt-3">
+        <h5>Payments</h5>
+        <app-payments-summary [payments]="claim.payments"></app-payments-summary>
+    </div>
+    <button class="btn btn-primary ms-3">Add Payment</button>
+</div>

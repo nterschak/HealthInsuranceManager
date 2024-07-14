@@ -16,6 +16,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
 import { MemberAddComponent } from './members/member-add/member-add.component';
 import { ClaimCardComponent } from './claims/claim-card/claim-card.component';
+import { ClaimDetailComponent } from './claims/claim-detail/claim-detail.component';
+import { ReimbursementDetailComponent } from './claims/reimbursement-detail/reimbursement-detail.component';
+import { PaymentsSummaryComponent } from './claims/payments-summary/payments-summary.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,10 @@ import { ClaimCardComponent } from './claims/claim-card/claim-card.component';
     MemberEditComponent,
     ConfirmDialogComponent,
     MemberAddComponent,
-    ClaimCardComponent
+    ClaimCardComponent,
+    ClaimDetailComponent,
+    ReimbursementDetailComponent,
+    PaymentsSummaryComponent
   ],
   imports: [
     BrowserModule,
