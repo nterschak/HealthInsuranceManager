@@ -8,6 +8,7 @@ import { Payment } from 'src/app/_models/payment';
 })
 export class PaymentsSummaryComponent implements OnInit {
   @Input() payments: Payment[] = [];
+  @Input() amountOwed = 0;
   total = 0;
 
   ngOnInit(): void {
