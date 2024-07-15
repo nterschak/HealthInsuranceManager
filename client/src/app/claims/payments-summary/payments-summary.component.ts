@@ -9,9 +9,10 @@ import { Payment } from 'src/app/_models/payment';
 export class PaymentsSummaryComponent implements OnInit {
   @Input() payments: Payment[] = [];
   @Input() amountOwed = 0;
-  total = 0;
 
-  ngOnInit(): void {
-    this.total = this.payments.reduce((t, p) => t + p.amount, 0);
+  ngOnInit(): void {}
+
+  calculateTotal() {
+    return this.payments.reduce((t, p) => t + p.amount, 0);
   }
 }

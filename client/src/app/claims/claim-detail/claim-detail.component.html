@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <div class="mt-3">
+    <div *ngIf="claim.amountOwed > 0" class="mt-3">
         <h5>Reimbursements</h5>
         <p *ngIf="claim.reimbursements.length == 0">No reimbursements have been submitted for this claim</p>
         <app-reimbursement-detail
@@ -55,12 +55,14 @@
             [reimbursement]="reimbursement"
         >
         </app-reimbursement-detail>
-        <button class="btn btn-primary ms-3">Add Reimbursement</button>     
+        <button *ngIf="claim.reimbursements.length === 0" class="btn btn-primary ms-3" (click)="addReimbursement()">
+            Add Reimbursement
+        </button>     
     </div>
 
-    <div class="mt-3">
+    <div *ngIf="claim.amountOwed > 0" class="mt-3">
         <h5>Payments</h5>
         <app-payments-summary [payments]="claim.payments" [amountOwed]="claim.amountOwed"></app-payments-summary>
+        <button class="btn btn-primary ms-3">Add Payment</button>
     </div>
-    <button class="btn btn-primary ms-3">Add Payment</button>
 </div>

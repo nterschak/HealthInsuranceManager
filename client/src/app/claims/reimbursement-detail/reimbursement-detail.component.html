@@ -15,6 +15,7 @@
                 <button
                     class="btn btn-primary"
                     [disabled]="reimbursement.dateReceived"
+                    (click)="markAsReceived()"
                 >Mark As Received</button>
             </div>
         </div>

@@ -1,7 +1,7 @@
 export interface Reimbursement {
     id: number
     amount: number
-    dateSubmitted: Date
-    dateReceived?: Date
+    dateSubmitted: string
+    dateReceived?: string
     claimId: number
 }

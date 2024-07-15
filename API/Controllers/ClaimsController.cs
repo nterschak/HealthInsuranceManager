@@ -73,7 +73,10 @@ namespace API.Controllers
             _uow.ClaimsRepository.AddReimbursement(reimbursement);
 
             if (await _uow.Complete())
+            {
+                claim = await _uow.ClaimsRepository.GetById(reimbursement.ClaimId);
                 return CreatedAtAction(nameof(GetById), new {Id = reimbursement.ClaimId}, claim);
+            }
 
             return BadRequest("Problem adding reimbursement");
         }
@@ -128,7 +131,10 @@ namespace API.Controllers
             _uow.ClaimsRepository.AddPayment(payment);
 
             if (await _uow.Complete())
+            {
+                claim = await _uow.ClaimsRepository.GetById(payment.ClaimId);
                 return CreatedAtAction(nameof(GetById), new {Id = payment.ClaimId}, claim);
+            }
 
             return BadRequest("Problem adding reimbursement");
         }        

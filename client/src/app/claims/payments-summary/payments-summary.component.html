@@ -16,9 +16,9 @@
             </tr>
             <tr style="font-weight: bold;">
                 <td colspan="2">Total</td>
-                <td [ngClass]="total >= amountOwed ? 'text-success' : ''">
-                    {{total | currency}}
-                    <i *ngIf="total >= amountOwed" class="fa fa-check"></i>
+                <td [ngClass]="calculateTotal() >= amountOwed ? 'text-success' : ''">
+                    {{calculateTotal() | currency}}
+                    <i *ngIf="calculateTotal() >= amountOwed" class="fa fa-check"></i>
                 </td>
             </tr>
         </tbody>
