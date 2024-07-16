@@ -33,4 +33,12 @@ export class ClaimDetailComponent implements OnInit {
       this.claimService.addPaymentWithModalForm(this.claim.id);
     }
   }
+
+  remainingBalance(): number {
+    if (this.claim) {
+      return this.claim.amountOwed - this.claim.payments.reduce((t, p) => t + p.amount, 0);
+    } else {
+      return 0;
+    }
+  }
 }

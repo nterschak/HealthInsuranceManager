@@ -22,6 +22,7 @@ namespace API.Data
         {
             return await _context.Claims
                 .AsNoTracking()
+                .OrderByDescending(c => c.DateProcessed)
                 .ProjectTo<ClaimDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
