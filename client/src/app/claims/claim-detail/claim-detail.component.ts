@@ -27,4 +27,10 @@ export class ClaimDetailComponent implements OnInit {
       });
     }
   }
+
+  addPayment() {
+    if (this.claim) {
+      this.claimService.addPaymentWithModalForm(this.claim.id);
+    }
+  }
 }

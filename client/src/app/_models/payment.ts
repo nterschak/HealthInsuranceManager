@@ -6,5 +6,5 @@ export interface Payment {
     datePaid: Date;
     claimId: number;
     paymentMethodId: number;
-    paymentMethod: PaymentMethod;
+    paymentMethod?: PaymentMethod;
 }

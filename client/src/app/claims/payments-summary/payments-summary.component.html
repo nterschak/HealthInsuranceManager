@@ -11,14 +11,14 @@
         <tbody>
             <tr *ngFor="let payment of payments">
                 <td>{{payment.datePaid | date:'shortDate'}}</td>
-                <td>{{payment.paymentMethod.description}} - {{payment.paymentMethod.lastFourDigits}}</td>
+                <td>{{payment.paymentMethod?.description}} - {{payment.paymentMethod?.lastFourDigits}}</td>
                 <td>{{payment.amount | currency}}</td>            
             </tr>
             <tr style="font-weight: bold;">
                 <td colspan="2">Total</td>
-                <td [ngClass]="calculateTotal() >= amountOwed ? 'text-success' : ''">
+                <td [ngClass]="isFullyPaid() ? 'text-success' : ''">
                     {{calculateTotal() | currency}}
-                    <i *ngIf="calculateTotal() >= amountOwed" class="fa fa-check"></i>
+                    <i *ngIf="isFullyPaid()" class="fa fa-check"></i>
                 </td>
             </tr>
         </tbody>

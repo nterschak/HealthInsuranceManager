@@ -15,4 +15,8 @@ export class PaymentsSummaryComponent implements OnInit {
   calculateTotal() {
     return this.payments.reduce((t, p) => t + p.amount, 0);
   }
+
+  isFullyPaid(): boolean {
+    return this.calculateTotal() >= (this.amountOwed - 0.005);
+  }
 }
