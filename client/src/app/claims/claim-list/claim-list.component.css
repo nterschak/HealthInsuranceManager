@@ -3,3 +3,7 @@
     overflow: scroll;
     overflow-x: hidden;
 }
+
+.filter-pane {
+    border-right: 1px solid;
+}

@@ -1,5 +1,6 @@
 using API.DTOs;
 using API.Entities;
+using API.FilterParams;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,15 +18,10 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<List<ClaimDto>> GetAllClaims()
+        public async Task<ActionResult<List<ClaimDto>>> GetAllClaims([FromQuery] ClaimParams claimParams)
         {
-            return await _uow.ClaimsRepository.GetAll();
-        }
-
-        [HttpGet("unpaid")]
-        public async Task<List<ClaimDto>> GetUnpaidClaims()
-        {
-            return await _uow.ClaimsRepository.GetUnpaidClaims();
+            if (claimParams.Year == 0) return BadRequest("A year must be specified");
+            return await _uow.ClaimsRepository.GetAll(claimParams);
         }
 
         [HttpGet("{id}")]

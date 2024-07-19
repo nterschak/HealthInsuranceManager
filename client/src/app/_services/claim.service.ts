@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Claim } from '../_models/claim';
 import { environment } from 'src/environments/environment';
@@ -7,6 +7,7 @@ import { Payment } from '../_models/payment';
 import { BehaviorSubject, map } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PaymentAddComponent } from '../modals/payment-add/payment-add.component';
+import { ClaimParams } from '../_models/claimParams';
 
 @Injectable({
   providedIn: 'root'
@@ -19,16 +20,17 @@ export class ClaimService {
 
   constructor(private http: HttpClient, private modalService: BsModalService) { }
 
-  getClaims() {
-    return this.http.get<Claim[]>(this.baseUrl + 'claims');
+  getClaims(claimParams: ClaimParams) {
+    let params = new HttpParams();
+    params = params.append("year", claimParams.year);
+    params = params.append("unpaidOnly", claimParams.unpaidOnly);
+    params = params.append("patientId", claimParams.patientId);
+
+    return this.http.get<Claim[]>(this.baseUrl + 'claims', { params });
   }
 
   getClaim(id: number) {
     return this.http.get<Claim>(this.baseUrl + 'claims/' + id);
-  }
-
-  getUnpaidClaims() {
-    return this.http.get<Claim>(this.baseUrl + 'claims/unpaid');
   }
 
   getClaimByClaimNumber(claimNumber: string) {

@@ -1,5 +1,6 @@
 using API.DTOs;
 using API.Entities;
+using API.FilterParams;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -18,13 +19,21 @@ namespace API.Data
             _mapper = mapper;
         }
 
-        public async Task<List<ClaimDto>> GetAll()
+        public async Task<List<ClaimDto>> GetAll(ClaimParams claimParams)
         {
-            return await _context.Claims
+            var claims = await _context.Claims
                 .AsNoTracking()
+                .Include(c => c.Patient)
+                .Include(c => c.Payments)
+                .Where(c => c.DateVisited.Year == claimParams.Year)
+                .Where(c => claimParams.PatientId == 0 || c.PatientId == claimParams.PatientId)
                 .OrderByDescending(c => c.DateProcessed)
-                .ProjectTo<ClaimDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
+            
+            if (claimParams.UnpaidOnly)
+                claims = claims.Where(c => c.Payments.Sum(p => p.Amount) < c.AmountOwed).ToList();
+
+            return claims.Select(c => _mapper.Map<ClaimDto>(c)).ToList();
         }
 
         public async Task<ClaimDto> GetById(int id)
@@ -45,27 +54,6 @@ namespace API.Data
                 .Include(c => c.Payments).ThenInclude(p => p.PaymentMethod)           
                 .SingleOrDefaultAsync(c => c.ClaimNumber == claimNumber);
             return _mapper.Map<ClaimDto>(claim);
-        }
-
-        public async Task<List<ClaimDto>> GetForMember(int memberId)
-        {
-            return await _context.Claims
-                .AsNoTracking()
-                .Where(c => c.PatientId == memberId)
-                .ProjectTo<ClaimDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
-        }
-
-        public async Task<List<ClaimDto>> GetUnpaidClaims()
-        {
-           var claims = await _context.Claims
-              .Include(c => c.Payments)
-              .ToListAsync();
-
-            return claims
-                .Where(c => c.Payments.Sum(p => p.Amount) < c.AmountOwed)
-                .Select(c => _mapper.Map<ClaimDto>(c))
-                .ToList();
         }
 
         public void AddClaim(Claim claim)
