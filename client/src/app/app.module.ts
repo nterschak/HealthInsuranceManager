@@ -20,6 +20,7 @@ import { ClaimDetailComponent } from './claims/claim-detail/claim-detail.compone
 import { ReimbursementDetailComponent } from './claims/reimbursement-detail/reimbursement-detail.component';
 import { PaymentsSummaryComponent } from './claims/payments-summary/payments-summary.component';
 import { PaymentAddComponent } from './modals/payment-add/payment-add.component';
+import { ClaimStatusSummaryComponent } from './claims/claim-status-summary/claim-status-summary.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { PaymentAddComponent } from './modals/payment-add/payment-add.component'
     ClaimDetailComponent,
     ReimbursementDetailComponent,
     PaymentsSummaryComponent,
-    PaymentAddComponent
+    PaymentAddComponent,
+    ClaimStatusSummaryComponent
   ],
   imports: [
     BrowserModule,

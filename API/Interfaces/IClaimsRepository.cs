@@ -6,7 +6,7 @@ namespace API.Interfaces
 {
     public interface IClaimsRepository
     {
-        Task<List<ClaimDto>> GetAll(ClaimParams claimParams);
+        Task<List<ClaimDto>> Get(ClaimParams claimParams);
         Task<ClaimDto> GetById(int id);
         Task<ClaimDto> GetByClaimNumber(string claimNumber);
         void AddClaim(Claim claim);

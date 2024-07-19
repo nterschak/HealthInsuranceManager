@@ -13,24 +13,16 @@
     <div class="card-body">
         <h6 class="card-title">{{claim.patientName}}</h6>
         <hr>
-        <dl class="mb-0">
-            <div class="row" style="text-align: center;">
-                <div class="col-4">
-                    <dt>Billed</dt>
-                    <dd>{{claim.amountBilled | currency}}</dd>
-                </div>
-    
-                <div class="col-4">
-                    <dt>Deductible</dt>
-                    <dd>{{claim.amountDeductible | currency}}</dd>    
-                </div>
-
-                <div class="col-4">
-                    <dt>Owed</dt>
-                    <dd>{{claim.amountOwed | currency}}</dd>    
-                </div>                
+        <div class="row" style="text-align: center;">
+            <div class="col-6 center-vertical">
+                <dt>Owed</dt>
+                <dd>{{claim.amountOwed | currency}}</dd>    
             </div>
-        </dl>
+        
+            <div class="col-6 center-vertical">
+                <app-claim-status-summary [summaryText]="claim.statusSummary"></app-claim-status-summary>
+            </div>
+        </div>
     </div>
     <div class="card-footer" style="font-style: italic;">{{claim.claimType}} - {{claim.networkStatus}}</div>
 </div>

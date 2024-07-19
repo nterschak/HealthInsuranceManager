@@ -2,6 +2,7 @@ using API.DTOs;
 using API.Entities;
 using API.FilterParams;
 using API.Interfaces;
+using API.Utilities;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
@@ -19,11 +20,12 @@ namespace API.Data
             _mapper = mapper;
         }
 
-        public async Task<List<ClaimDto>> GetAll(ClaimParams claimParams)
+        public async Task<List<ClaimDto>> Get(ClaimParams claimParams)
         {
             var claims = await _context.Claims
                 .AsNoTracking()
                 .Include(c => c.Patient)
+                .Include(c => c.Reimbursements)
                 .Include(c => c.Payments)
                 .Where(c => c.DateVisited.Year == claimParams.Year)
                 .Where(c => claimParams.PatientId == 0 || c.PatientId == claimParams.PatientId)
@@ -31,9 +33,16 @@ namespace API.Data
                 .ToListAsync();
             
             if (claimParams.UnpaidOnly)
-                claims = claims.Where(c => c.Payments.Sum(p => p.Amount) < c.AmountOwed).ToList();
+            {
+                claims = claims
+                    .Where(c => c.Payments.Sum(p => p.Amount) < c.AmountOwed)
+                    .ToList();
+            }
 
-            return claims.Select(c => _mapper.Map<ClaimDto>(c)).ToList();
+            return claims
+                .Select(c => _mapper.Map<ClaimDto>(c))
+                .Select(c => c.RemoveNaviationProperties())
+                .ToList();
         }
 
         public async Task<ClaimDto> GetById(int id)

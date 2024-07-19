@@ -21,7 +21,7 @@ namespace API.Controllers
         public async Task<ActionResult<List<ClaimDto>>> GetAllClaims([FromQuery] ClaimParams claimParams)
         {
             if (claimParams.Year == 0) return BadRequest("A year must be specified");
-            return await _uow.ClaimsRepository.GetAll(claimParams);
+            return await _uow.ClaimsRepository.Get(claimParams);
         }
 
         [HttpGet("{id}")]

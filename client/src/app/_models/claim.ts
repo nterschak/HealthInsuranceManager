@@ -12,6 +12,7 @@ export interface Claim {
     amountDeductible: number;
     amountOwed: number;
     networkStatus: string;
+    statusSummary: string;
     patientId: number;
     patientName: string;
     patient: Member;
