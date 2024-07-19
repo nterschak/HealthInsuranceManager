@@ -6,10 +6,15 @@ export interface Claim {
     id: number;
     claimNumber: string;
     claimType: string;
+    visitedProvider: string;
     dateVisited: Date;
     dateProcessed: Date;
     amountBilled: number;
     amountDeductible: number;
+    amountPlanPaid: number;
+    amountPlanDiscount: number;
+    amountYourResponsibility: number;
+    amountPaidAtVisit: number;
     amountOwed: number;
     networkStatus: string;
     statusSummary: string;
