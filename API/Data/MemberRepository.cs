@@ -28,15 +28,14 @@ namespace API.Data
         public async Task<Member> GetById(int id)
         {
             return await _context.Members
-                .Include(m => m.Claims)
                 .SingleOrDefaultAsync(m => m.Id == id);
         }
 
         public async Task<Member> GetByName(string firstName, string lastName)
         {
             return await _context.Members
-                .Include(m => m.Claims)
-                .FirstOrDefaultAsync(m => m.FirstName == firstName && m.LastName == lastName);
+                .FirstOrDefaultAsync(m => m.FirstName.ToLower() == firstName.ToLower()
+                    && m.LastName.ToLower() == lastName.ToLower());
         }
 
         public void AddMember(Member member)

@@ -37,6 +37,14 @@ export class ClaimService {
     return this.http.get<Claim>(this.baseUrl + 'claims/claim-number/' + claimNumber);
   }
 
+  checkClaimExists(claimNumber: string) {
+    return this.http.get<boolean>(this.baseUrl + 'claims/exists/' + claimNumber);
+  }
+
+  addClaim(claim: Claim) {
+    return this.http.post(this.baseUrl + 'claims', claim);
+  }
+
   addReimbursement(reimbursement: Reimbursement) {
     return this.http.post(this.baseUrl + 'claims/reimbursement', reimbursement).pipe(
       map((claim: any) => this.claimUpdatedSource.next(claim))

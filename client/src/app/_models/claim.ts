@@ -7,8 +7,8 @@ export interface Claim {
     claimNumber: string;
     claimType: string;
     visitedProvider: string;
-    dateVisited: Date;
-    dateProcessed: Date;
+    dateVisited: string;
+    dateProcessed: string;
     amountBilled: number;
     amountDeductible: number;
     amountPlanPaid: number;
@@ -20,7 +20,7 @@ export interface Claim {
     statusSummary: string;
     patientId: number;
     patientName: string;
-    patient: Member;
-    reimbursements: Reimbursement[];
-    payments: Payment[];
+    patient?: Member;
+    reimbursements?: Reimbursement[];
+    payments?: Payment[];
 }

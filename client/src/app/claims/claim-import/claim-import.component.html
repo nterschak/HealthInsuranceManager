@@ -1,0 +1,30 @@
+<form class="mb-3">
+    <div class="form-group" style="width: 400px">
+        <label for="selectClaimFile">Select your claims CSV file</label>
+        <input class="form-control" type="file" id="selectClaimFile"
+            accept="CSV" (change)="readFile($event)">
+    </div>
+</form>
+
+<div *ngIf="newClaims.length > 0">
+    <div class="row mb-3">
+        <div class="col-6">
+            <h4>Found {{newClaims.length}} new claims...</h4>
+        </div>
+        <div class="col-6">
+            <button class="btn btn-success pull-right" (click)="importNewClaims()">Import New Claims</button>
+        </div>
+    </div>
+    <app-claim-table [claims]="newClaims"></app-claim-table>
+</div>
+
+<div *ngIf="existingClaims.length > 0">
+    <h4>Found {{existingClaims.length}} existing claims...</h4>
+    <app-claim-table [claims]="existingClaims"></app-claim-table>
+</div>
+
+<div *ngIf="invalidClaims.length > 0">
+    <h4>Found {{invalidClaims.length}} invalid claims...</h4>
+    <p>These claims could not be matched to a member</p>
+    <app-claim-table [claims]="invalidClaims"></app-claim-table>
+</div>

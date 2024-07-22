@@ -56,9 +56,9 @@
         You still owe <strong>{{remainingBalance() | currency}}</strong> on this claim!
     </div>
 
-    <div *ngIf="claim.amountOwed > 0" class="mt-3">
+    <div *ngIf="claim.amountOwed > 0 && claim.reimbursements" class="mt-3">
         <h5>Reimbursements</h5>
-        <p *ngIf="claim.reimbursements.length == 0" class="ms-3">
+        <p *ngIf="claim.reimbursements.length === 0" class="ms-3">
             No reimbursements have been submitted for this claim
         </p>
         <app-reimbursement-detail
@@ -71,7 +71,7 @@
         </button>     
     </div>
 
-    <div *ngIf="claim.amountOwed > 0" class="mt-3">
+    <div *ngIf="claim.amountOwed > 0 && claim.payments" class="mt-3">
         <h5>Payments</h5>
         <app-payments-summary [payments]="claim.payments" [amountOwed]="claim.amountOwed"></app-payments-summary>
         <button class="btn btn-primary ms-3" (click)="addPayment()">Add Payment</button>

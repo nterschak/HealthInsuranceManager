@@ -19,6 +19,10 @@ export class MemberService {
     return this.http.get<Member>(this.baseUrl + 'member/' + id);
   }
 
+  getMemberByName(name: string) {
+    return this.http.get<Member>(this.baseUrl + 'member/by-name/' + name);
+  }
+
   addMember(member: Member) {
     return this.http.post(this.baseUrl + 'member', {
       firstName: member.firstName,

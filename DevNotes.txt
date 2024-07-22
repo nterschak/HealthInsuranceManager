@@ -33,3 +33,5 @@ Add ngx-toastr to angular application
 execute "npm install ngx-toastr"
 Add style to angular.json file
 Add ToastrModule to app module
+
+Regex for parsing claim CSV string: (?<=^|,)(?:([^,"]*)|"([^"]*)")(?=$|,)

@@ -35,7 +35,7 @@ export class ClaimDetailComponent implements OnInit {
   }
 
   remainingBalance(): number {
-    if (this.claim) {
+    if (this.claim?.payments) {
       return this.claim.amountOwed - this.claim.payments.reduce((t, p) => t + p.amount, 0);
     } else {
       return 0;

@@ -2,6 +2,7 @@ using API.DTOs;
 using API.Entities;
 using API.FilterParams;
 using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -11,10 +12,12 @@ namespace API.Controllers
     public class ClaimsController : ControllerBase
     {
         private readonly IUnitOfWork _uow;
+        private readonly IMapper _mapper;
 
-        public ClaimsController(IUnitOfWork uow)
+        public ClaimsController(IUnitOfWork uow, IMapper mapper)
         {
             _uow = uow;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -40,6 +43,13 @@ namespace API.Controllers
             return claim;            
         }
 
+        [HttpGet("exists/{claimNumber}")]
+        public async Task<bool> CheckClaimExists(string claimNumber)
+        {
+            var claim = await _uow.ClaimsRepository.GetByClaimNumber(claimNumber);
+            return claim != null;
+        }
+
         [HttpPost]
         public async Task<ActionResult> AddClaim(Claim newClaim)
         {
@@ -52,7 +62,7 @@ namespace API.Controllers
             _uow.ClaimsRepository.AddClaim(newClaim);
 
             if (await _uow.Complete())
-                return CreatedAtAction(nameof(GetById), new {Id = newClaim.Id}, newClaim);
+                return CreatedAtAction(nameof(GetById), new {Id = newClaim.Id}, _mapper.Map<ClaimDto>(newClaim));
 
             return BadRequest("Problem adding claim.");
         }

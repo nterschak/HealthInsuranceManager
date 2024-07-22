@@ -1,0 +1,22 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Claim #</th>
+            <th>Patient Name</th>
+            <th>Provider</th>            
+            <th>Date Visited</th>
+            <th>Date Processed</th>
+            <th>You Owe</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let claim of claims" [ngClass]="claim.id > 0 ? 'table-success' : ''">
+            <td style="font-style: italic;">{{claim.claimNumber}}</td>
+            <td>{{claim.patientName}}</td>
+            <td>{{claim.visitedProvider}}</td>
+            <td>{{claim.dateVisited | date:'shortDate'}}</td>
+            <td>{{claim.dateProcessed | date:'shortDate'}}</td>
+            <td>{{claim.amountOwed | currency}}</td>
+        </tr>
+    </tbody>
+</table>
