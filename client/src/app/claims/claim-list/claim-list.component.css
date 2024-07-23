@@ -1,9 +1,19 @@
-.claims-list {
-    height: calc(100vh - 125px);
+.main-container {
+    height: calc(100vh - 147px);
+}
+
+.child-container {
+    height: 100%;
     overflow: scroll;
     overflow-x: hidden;
 }
 
-.filter-pane {
-    border-right: 1px solid;
+.button-mid {
+    border-radius: 0px;
+    width: 125px;
+}
+
+.button-end {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
 }

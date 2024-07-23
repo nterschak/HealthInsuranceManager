@@ -12,8 +12,8 @@ import { MemberService } from 'src/app/_services/member.service';
   styleUrls: ['./claim-list.component.css']
 })
 export class ClaimListComponent implements OnInit {
-  members: Member[] = [];
   years: number[] = [];
+  members: Member[] = [];
   claimParams: ClaimParams = {} as ClaimParams;
   claims: Claim[] = [];
   selectedClaimId: number = 0;
@@ -54,7 +54,10 @@ export class ClaimListComponent implements OnInit {
 
   loadClaims() {
     this.claimService.getClaims(this.claimParams).subscribe({
-      next: claims => this.claims = claims
+      next: claims => {
+        this.claims = claims;
+        this.selectedClaim = undefined;
+      }
     });
   }
 
@@ -69,5 +72,9 @@ export class ClaimListComponent implements OnInit {
     this.claimService.getClaim(id).subscribe({
       next: claim => this.selectedClaim = claim
     })
+  }
+
+  toggleUnpaidOnly() {
+    this.claimParams.unpaidOnly = !this.claimParams.unpaidOnly;
   }
 }

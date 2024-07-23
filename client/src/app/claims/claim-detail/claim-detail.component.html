@@ -1,29 +1,31 @@
 <div *ngIf="claim" class="m-4">
     <div class="card m-3">
         <div class="card-header">
-            <div class="row">
-                <div class="col-6">
-                    Claim #{{claim.claimNumber}}
-                </div>
-                <div class="col-6" style="text-align: right;">
-                    {{claim.patientName}}
-                </div>
-            </div>
+            Claim #{{claim.claimNumber}}
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-6">
+                    <div class="ms-2">
+                        <i class="fa fa-child"></i>
+                        {{claim.patientName}}
+                    </div>
+                    <div class="ms-2">
+                        <i class="fa fa-user-md"></i>
+                        {{claim.visitedProvider}}
+                    </div>
+                    <br>
                     <ul>
                         <li style="font-style: italic;">
                             {{claim.claimType}}
                         </li>                        
                         <li>
-                            Visited on {{claim.dateVisited | date}}
+                            Visited on {{claim.dateVisited | date:'shortDate'}}
                         </li>
                         <li>
-                            Processed on {{claim.dateProcessed | date}}
+                            Processed on {{claim.dateProcessed | date:'shortDate'}}
                         </li>
-                        <li>
+                        <li *ngIf="claim.networkStatus">
                             {{claim.networkStatus}}
                             <i *ngIf="claim.networkStatus == 'In Network'" class="fa fa-check"></i>                            
                         </li>
@@ -31,21 +33,77 @@
                 </div>
                 <div class="col-6">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-8">
                             <div><strong>Billed:</strong></div>
-                            <div><strong>Deductible:</strong></div>
-                            <div><strong>Owed:</strong></div>
-                            <div><strong>HRA (75%)</strong></div>
-                            <div><strong>HSA (25%)</strong></div>
                         </div>
-                        <div class="col-6" style="text-align: right;">
-                            <div>{{claim.amountBilled | currency}}</div>
-                            <div>{{claim.amountDeductible | currency}}</div>
-                            <div>{{claim.amountOwed | currency}}</div>
-                            <div style="text-decoration: underline;">{{claim.amountOwed * 0.75 | currency}}</div>
-                            <div style="text-decoration: underline;">{{claim.amountOwed * 0.25 | currency}}</div>
+                        <div class="col-4">
+                            <div class="pull-right">{{claim.amountBilled | currency}}</div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div><strong>Deductible:</strong></div>
+                        </div>
+                        <div class="col-4">
+                            <div class="pull-right">{{claim.amountDeductible | currency}}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div><strong>Plan Paid:</strong></div>
+                        </div>
+                        <div class="col-4">
+                            <div class="pull-right">{{claim.amountPlanPaid | currency}}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div><strong>Plan Discount:</strong></div>
+                        </div>
+                        <div class="col-4">
+                            <div class="pull-right">{{claim.amountPlanDiscount | currency}}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div><strong>Your Responsibility:</strong></div>
+                        </div>
+                        <div class="col-4">
+                            <div class="pull-right">{{claim.amountYourResponsibility | currency}}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div><strong>Paid at Visit:</strong></div>
+                        </div>
+                        <div class="col-4">
+                            <div class="pull-right">{{claim.amountPaidAtVisit | currency}}</div>
+                        </div>
+                    </div>                                                                         
+                    <div class="row">
+                        <div class="col-8">
+                            <div><strong>Owed:</strong></div>
+                        </div>
+                        <div class="col-4">
+                            <div class="pull-right">{{claim.amountOwed | currency}}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div><strong>HRA (75%)</strong></div>
+                        </div>
+                        <div class="col-4">
+                            <div class="pull-right text-decoration-underline">{{claim.amountOwed * 0.75 | currency}}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div><strong>HSA (25%)</strong></div>
+                        </div>
+                        <div class="col-4">
+                            <div class="pull-right text-decoration-underline">{{claim.amountOwed * 0.25 | currency}}</div>
+                        </div>
+                    </div>                                                                                
                 </div>
             </div>
         </div>

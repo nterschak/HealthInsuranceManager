@@ -2,3 +2,11 @@
     display: grid;
     place-items: center;
 }
+
+.selectable {
+    cursor: pointer;
+}
+
+.selectable:hover {
+    opacity: 70%;
+}

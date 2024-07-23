@@ -1,28 +1,44 @@
 <div
     *ngIf="claim"
-    class="card text-bg-light m-4"
+    class="card text-bg-light m-4 selectable"
     [ngClass]="isSelected ? 'border-primary' : ''"
     (click)="selectClaim()"
 >
     <div class="card-header">
         <div class="row">
-            <div class="col-6">Claim #{{claim.claimNumber}}</div>
-            <div class="col-6" style="text-align: right;">Visited on {{claim.dateVisited | date:'shortDate'}}</div>
+            <div class="col-6">#{{claim.claimNumber}}</div>
+            <div class="col-6" style="text-align: right;">Visited {{claim.dateVisited | date:'shortDate'}}</div>
         </div>   
     </div>
-    <div class="card-body">
-        <h6 class="card-title">{{claim.patientName}}</h6>
-        <hr>
+    <div class="card-body p-2">
+        <div class="row text-center">
+            <div class="col-6">
+                <div>
+                    <i class="fa fa-child"></i>
+                    {{claim.patientName}}
+                </div>
+            </div>
+            <div class="col-6">
+                <div>
+                    <i class="fa fa-user-md"></i>
+                    {{claim.visitedProvider}}
+                </div>
+            </div>
+        </div>
+        <hr style="margin: 10px;">
         <div class="row" style="text-align: center;">
-            <div class="col-6 center-vertical">
+            <div class="col-5 center-vertical">
                 <dt>Owed</dt>
-                <dd>{{claim.amountOwed | currency}}</dd>    
+                <dd class="mb-0">{{claim.amountOwed | currency}}</dd>    
             </div>
         
-            <div class="col-6 center-vertical">
+            <div class="col-7 center-vertical">
                 <app-claim-status-summary [summaryText]="claim.statusSummary"></app-claim-status-summary>
             </div>
         </div>
     </div>
-    <div class="card-footer" style="font-style: italic;">{{claim.claimType}} - {{claim.networkStatus}}</div>
+    <div class="card-footer" style="font-style: italic;">
+        {{claim.claimType}}
+        <span *ngIf="claim.networkStatus"> - {{claim.networkStatus}}</span>
+    </div>
 </div>

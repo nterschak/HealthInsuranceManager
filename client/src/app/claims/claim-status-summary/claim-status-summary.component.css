@@ -1,26 +1,21 @@
 div {
-    border: solid 1px;
+    border: solid 2px;
     border-radius: 5px;
-    font-weight: bold;
     padding: 7px;
 }
 
 .success {
-    color: rgb(40, 167, 69);
     border-color: rgb(40, 167, 69);
 }
 
 .danger {
-    color: rgb(220, 53, 69);
     border-color: rgb(220, 53, 69);
 }
 
 .warning {
-    color: rgb(255, 193, 7);
     border-color: rgb(255, 193, 7);
 }
 
 .neutral {
-    color: rgb(108, 117, 125);
     border-color: rgb(108, 117, 125);
 }

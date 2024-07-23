@@ -45,7 +45,7 @@ export class ClaimImportService {
     const numFields = 18;
     let data = input.match(this.csvRegex) as Array<string>;
     if (data.length !== numFields) throw new Error('Invalid csv string');
-    data = data.map(d => this.removeQuotes(d)).map(d => d.trim());
+    data = data.map(d => d.replace(/"/g, '')).map(d => d.trim());
     return {
       id: 0,
       claimNumber: data[0],
@@ -60,15 +60,11 @@ export class ClaimImportService {
       amountYourResponsibility: this.parseNumber(data[13]),
       amountPaidAtVisit: this.parseNumber(data[14]),
       amountOwed: this.parseNumber(data[15]),
-      networkStatus: data[7],
+      networkStatus: data[7].replace(/-/g, ' '),
       statusSummary: "Processed",
       patientId: 0,
       patientName: data[1],
     };
-  }
-
-  private removeQuotes(input: string): string {
-    return input.replace(/\"/g, '');
   }
 
   private parseNumber(input: string): number {

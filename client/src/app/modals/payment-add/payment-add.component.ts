@@ -18,6 +18,7 @@ export class PaymentAddComponent {
     this.paymentService.getPaymentMethods().subscribe({
       next: paymentMethods => this.paymentMethods = paymentMethods
     });
+    this.payment.datePaid = new Date();
   }
 
   submit() {
