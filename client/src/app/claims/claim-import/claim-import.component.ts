@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Claim } from 'src/app/_models/claim';
+import { ImportOperation } from 'src/app/_models/ImportOperation';
 import { ClaimImportService } from 'src/app/_services/claim-import.service';
 import { ClaimService } from 'src/app/_services/claim.service';
 
@@ -9,7 +10,7 @@ import { ClaimService } from 'src/app/_services/claim.service';
   styleUrls: ['./claim-import.component.css']
 })
 export class ClaimImportComponent {
-  newClaims: Claim[] = [];
+  newClaims: ImportOperation<Claim>[] = [];
   existingClaims: Claim[] = [];
   invalidClaims: Claim[] = [];
   reader = new FileReader();
@@ -39,14 +40,17 @@ export class ClaimImportComponent {
   }
 
   importNewClaims() {
-    this.newClaims.forEach((c, i) => {
-      this.claimService.addClaim(c).subscribe({
-        next: response => {
-          let claim = response as Claim;
-          this.newClaims[i] = claim;
-        }
-      })
-    })
+    this.newClaims.forEach(operation => {
+      this.importNewClaim(operation)
+    });
+  }
+
+  importNewClaim(operation: ImportOperation<Claim>) {
+    operation.import();
+    this.claimService.addClaim(operation.item).subscribe({
+      next: () => operation.complete(),
+      error: () => operation.fail()
+    });
   }
 
   reset() {

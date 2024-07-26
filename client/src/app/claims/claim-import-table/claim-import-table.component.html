@@ -1,0 +1,36 @@
+<table class="table table-bordered">
+    <thead>
+        <tr class="text-center">
+            <th>Claim #</th>
+            <th>Patient Name</th>
+            <th>Provider</th>            
+            <th>Date Visited</th>
+            <th>Date Processed</th>
+            <th>You Owe</th>
+            <th><i class="fa fa-tasks"></i></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let operation of operations">
+            <td style="font-style: italic;">{{operation.item.claimNumber}}</td>
+            <td>{{operation.item.patientName}}</td>
+            <td>{{operation.item.visitedProvider}}</td>
+            <td>{{operation.item.dateVisited | date:'shortDate'}}</td>
+            <td>{{operation.item.dateProcessed | date:'shortDate'}}</td>
+            <td>{{operation.item.amountOwed | currency}}</td>
+            <td class="text-center">
+                <button
+                    class="btn btn-sm"
+                    (click)="importClaim(operation)"
+                    [disabled]="operation.status !== 0"
+                    [ngClass]="getButtonClass(operation)"
+                >
+                    <i *ngIf="operation.status === 0" class="fa fa-upload"></i>
+                    <i *ngIf="operation.status === 1" class="fa fa-clock-o"></i>
+                    <i *ngIf="operation.status === 2" class="fa fa-check"></i>
+                    <i *ngIf="operation.status === 3" class="fa fa-times"></i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

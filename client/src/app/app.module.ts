@@ -23,6 +23,7 @@ import { PaymentAddComponent } from './modals/payment-add/payment-add.component'
 import { ClaimStatusSummaryComponent } from './claims/claim-status-summary/claim-status-summary.component';
 import { ClaimImportComponent } from './claims/claim-import/claim-import.component';
 import { ClaimTableComponent } from './claims/claim-table/claim-table.component';
+import { ClaimImportTableComponent } from './claims/claim-import-table/claim-import-table.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ClaimTableComponent } from './claims/claim-table/claim-table.component'
     PaymentAddComponent,
     ClaimStatusSummaryComponent,
     ClaimImportComponent,
-    ClaimTableComponent
+    ClaimTableComponent,
+    ClaimImportTableComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import { ClaimService } from './claim.service';
 import { Claim } from '../_models/claim';
 import { map, Observable, Subject } from 'rxjs';
 import { MemberService } from './member.service';
+import { ImportOperation } from '../_models/ImportOperation';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class ClaimImportService {
   private existingClaimSource = new Subject<Claim>();
   existingClaim$ = this.existingClaimSource.asObservable();
 
-  private newClaimSource = new Subject<Claim>();
+  private newClaimSource = new Subject<ImportOperation<Claim>>();
   newClaim$ = this.newClaimSource.asObservable();
 
   private invalidClaimSource = new Subject<Claim>();
@@ -31,7 +32,7 @@ export class ClaimImportService {
             this.checkPatientIsValid(c).subscribe({
               next: id => {
                 c.patientId = id;
-                this.newClaimSource.next(c)
+                this.newClaimSource.next(new ImportOperation(c));
               },
               error: () => this.invalidClaimSource.next(c)
             })
