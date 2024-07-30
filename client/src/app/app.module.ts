@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { NavComponent } from './nav/nav.component';
 import { ClaimListComponent } from './claims/claim-list/claim-list.component';
@@ -24,6 +24,8 @@ import { ClaimStatusSummaryComponent } from './claims/claim-status-summary/claim
 import { ClaimImportComponent } from './claims/claim-import/claim-import.component';
 import { ClaimTableComponent } from './claims/claim-table/claim-table.component';
 import { ClaimImportTableComponent } from './claims/claim-import-table/claim-import-table.component';
+import { LoadingComponent } from './loading/loading.component';
+import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { ClaimImportTableComponent } from './claims/claim-import-table/claim-imp
     ClaimStatusSummaryComponent,
     ClaimImportComponent,
     ClaimTableComponent,
-    ClaimImportTableComponent
+    ClaimImportTableComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,9 @@ import { ClaimImportTableComponent } from './claims/claim-import-table/claim-imp
     }),
     ModalModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
