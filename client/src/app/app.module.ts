@@ -26,6 +26,7 @@ import { ClaimTableComponent } from './claims/claim-table/claim-table.component'
 import { ClaimImportTableComponent } from './claims/claim-import-table/claim-import-table.component';
 import { LoadingComponent } from './loading/loading.component';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+import { ErrorInterceptor } from './_interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

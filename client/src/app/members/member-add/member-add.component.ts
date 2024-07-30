@@ -31,8 +31,7 @@ export class MemberAddComponent implements OnInit {
           let member = response as Member;
           this.router.navigate(['members']);
           this.toastrService.success(`Added ${member?.firstName} to list of members!`);
-        },
-        error: () => this.toastrService.error('Something went wrong')
+        }
       });
     }
   }

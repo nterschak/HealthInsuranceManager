@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { tap } from 'rxjs';
 import { Claim } from 'src/app/_models/claim';
 import { ClaimParams } from 'src/app/_models/claimParams';
 import { Member } from 'src/app/_models/member';
-import { Reimbursement } from 'src/app/_models/reimbursement';
 import { ClaimService } from 'src/app/_services/claim.service';
 import { MemberService } from 'src/app/_services/member.service';
 
@@ -36,8 +36,9 @@ export class ClaimListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadClaims();
-    this.loadMembers();
+    this.loadMembers().subscribe({
+      next: () => this.loadClaims()
+    })
   }
 
   initializeFilters() {
@@ -62,9 +63,9 @@ export class ClaimListComponent implements OnInit {
   }
 
   loadMembers() {
-    this.memberService.getMembers().subscribe({
-      next: members => this.members = members
-    });
+    return this.memberService.getMembers().pipe(
+      tap(members => this.members = members)
+    );
   }
 
   updateSelectedClaim(id: number) {

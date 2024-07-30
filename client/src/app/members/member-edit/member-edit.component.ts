@@ -33,8 +33,7 @@ export class MemberEditComponent implements OnInit {
         next: () => {
           this.toastrService.success('Member updated!');
           this.editForm?.reset(this.member);
-        },
-        error: () => this.toastrService.error('Something went wrong.')
+        }
       });
     }
   }
