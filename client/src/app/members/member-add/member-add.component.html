@@ -1,7 +1,6 @@
 <h2 class="text-center">Add New Member</h2>
-<div class="row">
-    <div class="col-4"></div>
-    <div class="col-4">
+<div>
+    <div class="mx-auto" style="width: 100%; max-width: 25rem;">
         <form *ngIf="member" #editForm="ngForm" (ngSubmit)="submit()">
             <div class="form-group mb-3">
                 <label for="firstName">First Name</label>
@@ -42,7 +41,4 @@
             <button type="submit" class="btn btn-success" [disabled]="!editForm.dirty">Submit</button>
         </form>
     </div>
-    <div class="col-4"></div>
 </div>
-
-

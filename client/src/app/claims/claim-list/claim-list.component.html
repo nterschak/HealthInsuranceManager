@@ -1,20 +1,31 @@
-<div class="input-group mb-3" style="width: 550px;">
-    <select class="form-select" [(ngModel)]="claimParams.year" name="year">
-        <option *ngFor="let year of years" [value]="year">{{year}}</option>
-    </select>
-    
-    <select class="form-select" [(ngModel)]="claimParams.patientId" name="patientId">
-        <option value="0" selected>All Patients</option>
-        <option *ngFor="let member of members" [value]="member.id">
-            {{member.firstName}} {{member.lastName}}
-        </option>
-    </select>
-    
-    <div class="input-group-append">
-        <button class="btn btn-outline-secondary button-mid" (click)="toggleUnpaidOnly()">
-            {{claimParams.unpaidOnly ? 'Unpaid Only' : 'All Claims'}}
-        </button>                
-        <button class="btn btn-outline-success button-end" type="button" (click)="loadClaims()">Apply</button>
+<div class="d-inline-flex">
+    <div class="input-group" style="width: 650px;">
+        <div class="input-group-prepend">
+            <span
+                class="input-group-text"
+                [ngClass]="claims.length > 0 ? 'bg-success-subtle' : ''"
+                style="border-top-right-radius: 0%; border-bottom-right-radius: 0%;"
+            >
+                {{claims.length}} Claims Found
+            </span>
+        </div>
+        <select class="form-select" [(ngModel)]="claimParams.year" name="year">
+            <option *ngFor="let year of years" [value]="year">{{year}}</option>
+        </select>
+        
+        <select class="form-select" [(ngModel)]="claimParams.patientId" name="patientId">
+            <option value="0" selected>All Patients</option>
+            <option *ngFor="let member of members" [value]="member.id">
+                {{member.firstName}} {{member.lastName}}
+            </option>
+        </select>
+        
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary button-mid" (click)="toggleUnpaidOnly()">
+                {{claimParams.unpaidOnly ? 'Unpaid Only' : 'All Claims'}}
+            </button>                
+            <button class="btn btn-outline-success button-end" type="button" (click)="loadClaims()">Apply</button>
+        </div>
     </div>
 </div>
 

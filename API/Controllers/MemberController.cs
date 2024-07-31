@@ -42,6 +42,16 @@ namespace API.Controllers
             return member;
         }
 
+        [HttpGet("exists-by-name/{name}")]
+        public async Task<ActionResult<int?>> CheckMemberExistsByName(string name)
+        {
+            string[] names = name.Split();
+            if (names.Length != 2) return BadRequest("Name must be two words (first and last)");
+            var member = await _uow.MemberRepository.GetByName(names[0], names[1]);
+            if (member != null) return member.Id;
+            else return null;
+        }
+
         [HttpPost]
         public async Task<ActionResult> AddMember(Member member)
         {

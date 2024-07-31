@@ -23,6 +23,10 @@ export class MemberService {
     return this.http.get<Member>(this.baseUrl + 'member/by-name/' + name);
   }
 
+  checkExistsByName(name: string) {
+    return this.http.get<number | null>(this.baseUrl + 'member/exists-by-name/' + name);
+  } 
+
   addMember(member: Member) {
     return this.http.post(this.baseUrl + 'member', {
       firstName: member.firstName,

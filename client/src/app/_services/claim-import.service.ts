@@ -24,22 +24,7 @@ export class ClaimImportService {
 
   parseCSVFile(input: string) {
     let claims = input.split('\n').slice(1).map(l => this.parseClaimFromCSV(l));
-    claims.forEach(c => {
-      this.claimService.checkClaimExists(c.claimNumber).subscribe({
-        next: exists => {
-          if (exists) this.existingClaimSource.next(c);
-          else {
-            this.checkPatientIsValid(c).subscribe({
-              next: id => {
-                c.patientId = id;
-                this.newClaimSource.next(new ImportOperation(c));
-              },
-              error: () => this.invalidClaimSource.next(c)
-            })
-          }
-        }
-      });
-    });
+    claims.forEach(c => this.processClaim(c));
   }
 
   parseClaimFromCSV(input: string): Claim {
@@ -72,9 +57,23 @@ export class ClaimImportService {
     return +input.replace(/[\$,]/g, '');
   }
 
-  private checkPatientIsValid(claim: Claim): Observable<number> {
-    return this.memberService.getMemberByName(claim.patientName).pipe(
-      map(member => member.id)
-    );
+  private processClaim(claim: Claim) {
+    this.claimService.checkClaimExists(claim.claimNumber).subscribe({
+      next: exists => {
+        if (exists) this.existingClaimSource.next(claim);
+        else {
+          this.memberService.checkExistsByName(claim.patientName).subscribe({
+            next: patientId => {
+              if (patientId) {
+                claim.patientId = patientId;
+                this.newClaimSource.next(new ImportOperation(claim));                  
+              } else {
+                this.invalidClaimSource.next(claim);
+              }
+            }
+          });
+        }
+      }
+    });    
   }
 }
