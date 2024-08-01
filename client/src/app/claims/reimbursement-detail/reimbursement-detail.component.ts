@@ -21,9 +21,7 @@ export class ReimbursementDetailComponent {
         dateReceived: new Date().toJSON().slice(0, 10),
         claimId: this.reimbursement.claimId
       };
-      this.claimService.updateReimbursement(updatedReimbursement).subscribe({
-        next: () => console.log('reimbursement updated')
-      })
+      this.claimService.updateReimbursement(updatedReimbursement).subscribe();
     }
   }
 }

@@ -32,8 +32,7 @@ export class MemberListComponent implements OnInit {
         next: result => {
           if (result) {
             this.memberService.removeMember(member.id).subscribe({
-              next: _ => this.members = this.members.filter(m => m.id != member.id),
-              error: _ => this.toastrService.error("Something went wrong.")
+              next: () => this.members = this.members.filter(m => m.id != member.id)
             });
           }
         }

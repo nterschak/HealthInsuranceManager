@@ -22,9 +22,7 @@ export class ClaimDetailComponent implements OnInit {
         amount: this.claim.amountOwed * 0.75,
         dateSubmitted: new Date().toJSON().slice(0, 10),
         claimId: this.claim.id
-      }).subscribe({
-        next: () => console.log('Reimbursement added')
-      });
+      }).subscribe();
     }
   }
 
