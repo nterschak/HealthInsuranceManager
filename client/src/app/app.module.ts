@@ -27,6 +27,8 @@ import { ClaimImportTableComponent } from './claims/claim-import-table/claim-imp
 import { LoadingComponent } from './loading/loading.component';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
+import { PaymentMethodCardComponent } from './payments/payment-method-card/payment-method-card.component';
+import { PaymentMethodListComponent } from './payments/payment-method-list/payment-method-list.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { ErrorInterceptor } from './_interceptors/error.interceptor';
     ClaimImportComponent,
     ClaimTableComponent,
     ClaimImportTableComponent,
-    LoadingComponent
+    LoadingComponent,
+    PaymentMethodCardComponent,
+    PaymentMethodListComponent
   ],
   imports: [
     BrowserModule,
