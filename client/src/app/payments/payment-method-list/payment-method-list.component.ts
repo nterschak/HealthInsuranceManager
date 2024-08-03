@@ -21,4 +21,8 @@ export class PaymentMethodListComponent implements OnInit {
       next: paymentMethods => this.paymentMethods = paymentMethods
     });
   }
+
+  removePayment(id: number) {
+    this.paymentMethods = this.paymentMethods.filter(p => p.id !== id);
+  }
 }

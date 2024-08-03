@@ -14,4 +14,16 @@ export class PaymentService {
   getPaymentMethods() {
     return this.http.get<PaymentMethod[]>(this.baseUrl + 'payments/payment-method');
   }
+
+  getPaymentMethodById(id: number) {
+    return this.http.get<PaymentMethod>(this.baseUrl + 'payments/payment-method' + id);
+  }
+
+  addPaymentMethod(paymentMethod: PaymentMethod) {
+    return this.http.post(this.baseUrl + 'payments/payment-method', paymentMethod);
+  }
+
+  removePaymentMethod(id: number) {
+    return this.http.delete(this.baseUrl + 'payments/payment-method/' + id);
+  }
 }

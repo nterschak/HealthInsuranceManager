@@ -1,7 +1,7 @@
 <h2 class="mb-3">Payment Methods</h2>
-<div class="row mb-3">
-    <div class="col-3" *ngFor="let paymentMethod of paymentMethods">
-        <app-payment-method-card [paymentMethod]="paymentMethod"></app-payment-method-card>
+<div class="row">
+    <div class="col-3 mb-3" *ngFor="let paymentMethod of paymentMethods">
+        <app-payment-method-card [paymentMethod]="paymentMethod" (deleted)="removePayment($event)"></app-payment-method-card>
     </div>
 </div>
-<button class="btn btn-success">Add New</button>
+<button class="btn btn-success" routerLink="add">Add New</button>

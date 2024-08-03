@@ -70,9 +70,13 @@ export class ClaimListComponent implements OnInit {
 
   updateSelectedClaim(id: number) {
     this.selectedClaimId = id;
-    this.claimService.getClaim(id).subscribe({
-      next: claim => this.selectedClaim = claim
-    })
+    if (id > 0) {
+      this.claimService.getClaim(id).subscribe({
+        next: claim => this.selectedClaim = claim
+      });
+    } else {
+      this.selectedClaim = undefined;
+    }
   }
 
   toggleUnpaidOnly() {
