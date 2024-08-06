@@ -1,46 +1,55 @@
 <h2 class="text-center">Add Payment Method</h2>
 <div>
     <div class="mx-auto" style="width: 20rem;">
-        <form #editForm="ngForm" (ngSubmit)="submit()">
+        <form [formGroup]="paymentMethodForm" (ngSubmit)="submit()">
             <div class="form-group mb-3">
                 <label for="lastFourDigits">Last Four Digits</label>
                 <input
+                    id="lastFourDigits"
                     type="text"
                     class="form-control"
+                    formControlName="lastFourDigits"
                     placeholder="Last Four Digits"
-                    required
-                    [(ngModel)]="paymentMethod.lastFourDigits"
-                    name="lastFourDigits"
                 >
+                <div
+                    class="text-danger"
+                    *ngIf="paymentMethodForm.get('lastFourDigits')?.touched && !paymentMethodForm.get('lastFourDigits')?.valid"
+                >Must be 4 digits</div>
             </div>
         
             <div class="form-group mb-3">
                 <label for="paymentType">Payment Type</label>
                 <select
+                    id="paymentType"
                     class="form-select"
-                    required
-                    [(ngModel)]="paymentMethod.paymentType"
-                    name="paymentType"
+                    formControlName="paymentType"
                 >
                     <option value="">Choose a payment type</option>
                     <option value="Bank Account">Bank Account</option>
                     <option value="Credit Card">Credit Card</option>
                     <option value="Debit Card">Debit Card</option>
                 </select>
+                <div
+                    class="text-danger"
+                    *ngIf="paymentMethodForm.get('paymentType')?.touched && !paymentMethodForm.get('paymentType')?.valid"
+                >Required</div>                
             </div>
         
             <div class="form-group mb-3">
                 <label for="description">Description</label>
                 <input
+                    id="description"
                     type="text"
                     class="form-control"
+                    formControlName="description"
                     placeholder="Description"
-                    required
-                    [(ngModel)]="paymentMethod.description"
-                    name="description"
                 >
+                <div
+                    class="text-danger"
+                    *ngIf="paymentMethodForm.get('description')?.touched && !paymentMethodForm.get('description')?.valid"
+                >Required</div>                  
             </div>
-            <button type="submit" class="btn btn-success" [disabled]="!editForm.dirty">Submit</button>
+            <button type="submit" class="btn btn-success" [disabled]="!paymentMethodForm.valid">Submit</button>
         </form>
     </div>
 </div>

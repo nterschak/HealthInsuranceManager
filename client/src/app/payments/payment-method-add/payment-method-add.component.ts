@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { PaymentMethod } from 'src/app/_models/payment-method';
 import { PaymentService } from 'src/app/_services/payment.service';
 
 @Component({
@@ -10,19 +10,23 @@ import { PaymentService } from 'src/app/_services/payment.service';
   styleUrls: ['./payment-method-add.component.css']
 })
 export class PaymentMethodAddComponent {
-  paymentMethod: PaymentMethod = {} as PaymentMethod;
+  paymentMethodForm: FormGroup;
 
   constructor(private paymentService: PaymentService, private router: Router,
-    private toastrService: ToastrService
+    private toastrService: ToastrService, private formBuilder: FormBuilder
   ) {
-    this.paymentMethod.paymentType = "";
+    this.paymentMethodForm = formBuilder.group({
+      lastFourDigits: ['', [Validators.required, Validators.pattern('\\d{4}')]],
+      paymentType: ['', Validators.required],
+      description: ['', Validators.required]
+    });
   }
 
   submit() {
-    this.paymentService.addPaymentMethod(this.paymentMethod).subscribe({
-      next: () => {
+    this.paymentService.addPaymentMethod(this.paymentMethodForm.value).subscribe({
+      next: (paymentMethod: any) => {
         this.router.navigateByUrl('payment-methods');
-        this.toastrService.success(`Payment method ${this.paymentMethod.lastFourDigits} added!`)
+        this.toastrService.success(`Payment method ${paymentMethod.lastFourDigits} added!`)
       }
     });
   }

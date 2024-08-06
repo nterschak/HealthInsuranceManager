@@ -1,46 +1,60 @@
-<h2 class="text-center">Update Member</h2>
+<h2 *ngIf="!isNew" class="text-center">Update Member</h2>
+<h2 *ngIf="isNew" class="text-center">Add New Member</h2>
 <div>
-    <div class="mx-auto" style="width: 100%; max-width: 25rem;">
-        <form *ngIf="member" #editForm="ngForm" (ngSubmit)="submit()">
+    <div class="mx-auto" style="width: 20rem;">
+        <form [formGroup]="memberForm" (ngSubmit)="submit()">
             <div class="form-group mb-3">
                 <label for="firstName">First Name</label>
                 <input
+                    id="firstName"
                     type="text"
                     class="form-control"
+                    formControlName="firstName"
                     placeholder="First Name"
-                    required
-                    [(ngModel)]="member.firstName"
-                    name="firstName"
                 >
+                <div
+                    class="text-danger"
+                    *ngIf="memberForm.get('firstName')?.touched && !memberForm.get('firstName')?.valid"
+                >
+                    Required
+                </div>
             </div>
         
             <div class="form-group mb-3">
                 <label for="lastName">Last Name</label>
                 <input
+                    id="lastName"
                     type="text"
                     class="form-control"
+                    formControlName="lastName"
                     placeholder="Last Name"
-                    required
-                    [(ngModel)]="member.lastName"
-                    name="lastName"
                 >
+                <div
+                    class="text-danger"
+                    *ngIf="memberForm.get('lastName')?.touched && !memberForm.get('lastName')?.valid"
+                >
+                    Required
+                </div>                
             </div>
         
             <div class="form-group mb-3">
-                <label for="dateOfBirth">Date Of Birth</label>
+                <label for="dateOfBirth">Date of Birth</label>
                 <input
+                    id="dateOfBirth"
                     type="text"
                     class="form-control"
+                    formControlName="dateOfBirth"
                     placeholder="Date of Birth"
-                    required
                     bsDatepicker
-                    [(ngModel)]="member.dateOfBirth"
-                    name="dateOfBirth"
                 >
+                <div
+                    class="text-danger"
+                    *ngIf="memberForm.get('dateOfBirth')?.touched && !memberForm.get('dateOfBirth')?.valid"
+                >
+                    Required
+                </div>                    
             </div>
-            <button type="submit" class="btn btn-success" [disabled]="!editForm.dirty">Save Changes</button>
+            <button type="submit" class="btn btn-success" [disabled]="!memberForm.valid || !memberForm.touched">Submit</button>
         </form>
     </div>
 </div>
-
-

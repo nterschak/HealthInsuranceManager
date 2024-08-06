@@ -2,48 +2,65 @@
     <h4 class="modal-title pull-left">Add Payment</h4>
 </div>
 <div class="modal-body">
-    <form>
+    <form [formGroup]="paymentForm">
         <div class="form-group mb-3">
             <label for="amount">Amount</label>
             <input
+                id="amount"
                 type="number"
                 class="form-control"
+                formControlName="amount"
                 placeholder="Amount"
-                required
-                [(ngModel)]="payment.amount"
-                name="amount"
             >
+            <div class="mt-1">{{paymentForm.get('amount')?.value | currency}}</div>
+            <div
+                class="text-danger"
+                *ngIf="paymentForm.get('amount')?.touched && !paymentForm.get('amount')?.valid"
+            >
+                Required, must be greater than zero
+            </div>            
         </div>
 
         <div class="form-group mb-3">
             <label for="datePaid">Date Paid</label>
             <input
+                id="datePaid"
                 type="text"
                 class="form-control"
+                formControlName="datePaid"
                 placeholder="Date Paid"
-                required
                 bsDatepicker
-                [(ngModel)]="payment.datePaid"
-                name="datePaid"
             >
+            <div
+                class="text-danger"
+                *ngIf="paymentForm.get('datePaid')?.touched && !paymentForm.get('datePaid')?.valid"
+            >
+                Required
+            </div>                
         </div>        
     
         <div class="form-group mb-3">
-            <label for="paymentMethod">Payment Method</label>
+            <label for="paymentMethodId">Payment Method</label>
             <select
+                id="paymentMethodId"
                 class="form-select"
-                required
-                [(ngModel)]="payment.paymentMethodId"
-                name="paymentMethodId"    
+                formControlName="paymentMethodId"
             >
+                <option value="0">Select a payment method</option>
                 <option *ngFor="let paymentMethod of paymentMethods" [value]="paymentMethod.id">
                     {{paymentMethod.description}} - {{paymentMethod.lastFourDigits}}
                 </option>
             </select>
+            <div
+                class="text-danger"
+                *ngIf="paymentForm.get('paymentMethodId')?.touched && !paymentForm.get('paymentMethodId')?.valid"
+            >
+                Required
+            </div>        
         </div>
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-success me-3" (click)="submit()">Submit</button>
+    <button class="btn btn-success me-3" [disabled]="!paymentForm.valid" (click)="submit()">Submit</button>
     <button class="btn btn-danger" (click)="cancel()">Cancel</button>
 </div>

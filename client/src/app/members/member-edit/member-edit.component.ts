@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Member } from 'src/app/_models/member';
 import { MemberService } from 'src/app/_services/member.service';
@@ -11,30 +11,58 @@ import { MemberService } from 'src/app/_services/member.service';
   styleUrls: ['./member-edit.component.css']
 })
 export class MemberEditComponent implements OnInit {
-  member?: Member;
-  @ViewChild('editForm') editForm?: NgForm
+  memberForm: FormGroup;
+  isNew = true;
+  memberId?: number;
 
   constructor(private memberService: MemberService, private route: ActivatedRoute,
-    private toastrService: ToastrService) {}
-
-  ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.memberService.getMember(id).subscribe({
-      next: member => {
-        this.member = member;
-        this.member.dateOfBirth = new Date(member.dateOfBirth + 'T00:00:00');
-      }
-    })
+    private toastrService: ToastrService, private router: Router, private formBuilder: FormBuilder
+  ) {
+    this.memberForm = formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      dateOfBirth: [null, Validators.required]
+    });
   }
 
-  submit() {
-    if (this.member) {
-      this.memberService.updateMember(this.member).subscribe({
-        next: () => {
-          this.toastrService.success('Member updated!');
-          this.editForm?.reset(this.member);
+  ngOnInit(): void {
+    this.memberId = Number(this.route.snapshot.paramMap.get('id'));
+    if (this.memberId) {
+      this.isNew = false;
+      this.memberService.getMember(this.memberId).subscribe({
+        next: member => {
+          this.memberForm.setValue({
+            firstName: member.firstName,
+            lastName: member.lastName,
+            dateOfBirth: new Date(member.dateOfBirth + 'T00:00:00')
+          });
         }
       });
     }
+  }
+
+  submit() {
+    if (this.isNew) this.addMember();
+    else this.updateMember();
+  }
+
+  addMember() {
+    this.memberService.addMember(this.memberForm.value).subscribe({
+      next: response => {
+        let member = response as Member;
+        this.toastrService.success(`Added ${member?.firstName} to list of members!`);
+        this.router.navigate(['members']);
+      }
+    });
+  }  
+
+  updateMember() {
+    this.memberService.updateMember({id: this.memberId, ...this.memberForm.value}).subscribe({
+      next: () => {
+        const name = this.memberForm.get('firstName')?.value;
+        this.toastrService.success(`${name}'s information successfuly updated!`);
+        this.router.navigate(['members']);
+      }
+    });
   }
 }

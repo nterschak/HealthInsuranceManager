@@ -9,12 +9,11 @@ import { NavComponent } from './nav/nav.component';
 import { ClaimListComponent } from './claims/claim-list/claim-list.component';
 import { HomeComponent } from './home/home.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
-import { MemberAddComponent } from './members/member-add/member-add.component';
 import { ClaimCardComponent } from './claims/claim-card/claim-card.component';
 import { ClaimDetailComponent } from './claims/claim-detail/claim-detail.component';
 import { ReimbursementDetailComponent } from './claims/reimbursement-detail/reimbursement-detail.component';
@@ -40,7 +39,6 @@ import { PaymentMethodAddComponent } from './payments/payment-method-add/payment
     HomeComponent,
     MemberEditComponent,
     ConfirmDialogComponent,
-    MemberAddComponent,
     ClaimCardComponent,
     ClaimDetailComponent,
     ReimbursementDetailComponent,
@@ -66,6 +64,7 @@ import { PaymentMethodAddComponent } from './payments/payment-method-add/payment
       positionClass: 'toast-bottom-right'
     }),
     ModalModule.forRoot(),
+    ReactiveFormsModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},

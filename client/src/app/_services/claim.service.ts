@@ -76,7 +76,7 @@ export class ClaimService {
     this.bsModalRef.onHidden!.subscribe({
       next: () => {
         const result = this.bsModalRef!.content!.result;
-        const payment = this.bsModalRef!.content!.payment;
+        const payment = this.bsModalRef!.content!.paymentForm.value;
 
         if (result && payment) {
           payment.claimId = claimId;
