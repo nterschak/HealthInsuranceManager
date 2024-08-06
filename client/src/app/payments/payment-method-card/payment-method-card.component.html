@@ -6,7 +6,7 @@
     <div class="card-footer">
         <span class="card-text">{{paymentMethod.paymentType}}</span>
         <div class="pull-right">
-            <button class="btn btn-secondary btn-sm me-2"><i class="fa fa-pencil-square-o"></i></button>
+            <button class="btn btn-secondary btn-sm me-2" routerLink="edit/{{paymentMethod.id}}"><i class="fa fa-pencil-square-o"></i></button>
             <button class="btn btn-danger btn-sm" (click)="deletePaymentMethod()"><i class="fa fa-trash"></i></button>
         </div>
     </div>

@@ -1,4 +1,5 @@
-<h2 class="text-center">Add Payment Method</h2>
+<h2 *ngIf="isNew" class="text-center">Add Payment Method</h2>
+<h2 *ngIf="!isNew" class="text-center">Update Payment Method</h2>
 <div>
     <div class="mx-auto" style="width: 20rem;">
         <form [formGroup]="paymentMethodForm" (ngSubmit)="submit()">
@@ -49,7 +50,7 @@
                     *ngIf="paymentMethodForm.get('description')?.touched && !paymentMethodForm.get('description')?.valid"
                 >Required</div>                  
             </div>
-            <button type="submit" class="btn btn-success" [disabled]="!paymentMethodForm.valid">Submit</button>
+            <button type="submit" class="btn btn-success" [disabled]="!paymentMethodForm.valid || !paymentMethodForm.touched">Submit</button>
         </form>
     </div>
 </div>

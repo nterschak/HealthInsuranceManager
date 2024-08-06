@@ -6,7 +6,7 @@ import { MemberListComponent } from './members/member-list/member-list.component
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { ClaimImportComponent } from './claims/claim-import/claim-import.component';
 import { PaymentMethodListComponent } from './payments/payment-method-list/payment-method-list.component';
-import { PaymentMethodAddComponent } from './payments/payment-method-add/payment-method-add.component';
+import { PaymentMethodEditComponent } from './payments/payment-method-edit/payment-method-edit.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -16,7 +16,8 @@ const routes: Routes = [
   { path: 'members/add', component: MemberEditComponent},
   { path: 'members/edit/:id', component: MemberEditComponent},
   { path: 'payment-methods', component: PaymentMethodListComponent},
-  { path: 'payment-methods/add', component: PaymentMethodAddComponent},
+  { path: 'payment-methods/add', component: PaymentMethodEditComponent},
+  { path: 'payment-methods/edit/:id', component: PaymentMethodEditComponent},
 ];
 
 @NgModule({

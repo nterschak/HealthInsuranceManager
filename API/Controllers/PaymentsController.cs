@@ -1,5 +1,6 @@
 using API.Entities;
 using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -9,10 +10,12 @@ namespace API.Controllers
     public class PaymentsController : ControllerBase
     {
         private readonly IUnitOfWork _uow;
+        private readonly IMapper _mapper;
 
-        public PaymentsController(IUnitOfWork uow)
+        public PaymentsController(IUnitOfWork uow, IMapper mapper)
         {
             _uow = uow;
+            _mapper = mapper;
         }
 
         [HttpGet("payment-method")]
@@ -43,6 +46,19 @@ namespace API.Controllers
                 return CreatedAtAction(nameof(GetPaymentMethodById), new {Id = newPaymentMethod.Id}, newPaymentMethod);
 
             return BadRequest("Problem adding new payment method");
+        }
+
+        [HttpPut("payment-method")]
+        public async Task<ActionResult> UpdatePaymentMethod(PaymentMethod updatedPaymentMethod)
+        {
+            var paymentMethod = await _uow.PaymentRepository.GetPaymentMethodById(updatedPaymentMethod.Id);
+            if (paymentMethod == null) return NotFound();
+
+            _mapper.Map(updatedPaymentMethod, paymentMethod);
+
+            if (await _uow.Complete()) return NoContent();
+
+            return BadRequest("Problem updating payment method");
         }
 
         [HttpDelete("payment-method/{id}")]

@@ -16,11 +16,15 @@ export class PaymentService {
   }
 
   getPaymentMethodById(id: number) {
-    return this.http.get<PaymentMethod>(this.baseUrl + 'payments/payment-method' + id);
+    return this.http.get<PaymentMethod>(this.baseUrl + 'payments/payment-method/' + id);
   }
 
   addPaymentMethod(paymentMethod: PaymentMethod) {
     return this.http.post(this.baseUrl + 'payments/payment-method', paymentMethod);
+  }
+
+  updatePaymentMethod(paymentMethod: PaymentMethod) {
+    return this.http.put(this.baseUrl + 'payments/payment-method', paymentMethod);
   }
 
   removePaymentMethod(id: number) {
