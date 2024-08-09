@@ -9,6 +9,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PaymentAddComponent } from '../modals/payment-add/payment-add.component';
 import { ClaimParams } from '../_models/claimParams';
 import { ReimbursementAddComponent } from '../modals/reimbursement-add/reimbursement-add.component';
+import { DateService } from './date.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class ClaimService {
   reimbursementBsModalRef?: BsModalRef<ReimbursementAddComponent>;
   paymentBsModalRef?: BsModalRef<PaymentAddComponent>;
 
-  constructor(private http: HttpClient, private modalService: BsModalService) { }
+  constructor(private http: HttpClient, private modalService: BsModalService,
+    private dateService: DateService) { }
 
   getClaims(claimParams: ClaimParams) {
     let params = new HttpParams();
@@ -51,7 +53,7 @@ export class ClaimService {
     return this.http.post(this.baseUrl + 'claims/reimbursement', {
       id: 0,
       amount: reimbursement.amount,
-      dateSubmitted: reimbursement.dateSubmitted.toJSON().slice(0, 10),
+      dateSubmitted: this.dateService.getLocalDateString(reimbursement.dateSubmitted),
       dateReceived: null,
       claimId: reimbursement.claimId
     }).pipe(
@@ -64,7 +66,7 @@ export class ClaimService {
       id: reimbursement.id,
       amount: reimbursement.amount,
       dateSubmitted: reimbursement.dateSubmitted,
-      dateReceived: new Date().toJSON().slice(0, 10),
+      dateReceived: this.dateService.getLocalDateString(new Date()),
       claimId: reimbursement.claimId
     }).pipe(
       map(() => {
@@ -79,7 +81,7 @@ export class ClaimService {
     return this.http.post(this.baseUrl + 'claims/payment', {
       id: 0,
       amount: payment.amount,
-      datePaid: payment.datePaid.toJSON().slice(0, 10),
+      datePaid: this.dateService.getLocalDateString(payment.datePaid),
       claimId: payment.claimId,
       paymentMethodId: payment.paymentMethodId
     });

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Member } from '../_models/member';
+import { DateService } from './date.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Member } from '../_models/member';
 export class MemberService {
   baseUrl: string = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private dateService: DateService) { }
 
   getMembers() {
     return this.http.get<Member[]>(this.baseUrl + 'member');
@@ -31,7 +32,7 @@ export class MemberService {
     return this.http.post(this.baseUrl + 'member', {
       firstName: member.firstName,
       lastName: member.lastName,
-      dateOfBirth: member.dateOfBirth.toJSON().slice(0, 10)
+      dateOfBirth: this.dateService.getLocalDateString(member.dateOfBirth)
     });
   }
 
@@ -40,7 +41,7 @@ export class MemberService {
       id: member.id,
       firstName: member.firstName,
       lastName: member.lastName,
-      dateOfBirth: member.dateOfBirth.toJSON().slice(0, 10)
+      dateOfBirth: this.dateService.getLocalDateString(member.dateOfBirth)
     });
   }
 
