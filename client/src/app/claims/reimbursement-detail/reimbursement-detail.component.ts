@@ -14,14 +14,7 @@ export class ReimbursementDetailComponent {
 
   markAsReceived() {
     if (this.reimbursement) {
-      let updatedReimbursement = {
-        id: this.reimbursement?.id,
-        amount: this.reimbursement.amount,
-        dateSubmitted: this.reimbursement.dateSubmitted,
-        dateReceived: new Date().toJSON().slice(0, 10),
-        claimId: this.reimbursement.claimId
-      };
-      this.claimService.updateReimbursement(updatedReimbursement).subscribe();
+      this.claimService.updateReimbursement(this.reimbursement).subscribe();
     }
   }
 }

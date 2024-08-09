@@ -8,6 +8,7 @@ import { BehaviorSubject, map } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { PaymentAddComponent } from '../modals/payment-add/payment-add.component';
 import { ClaimParams } from '../_models/claimParams';
+import { ReimbursementAddComponent } from '../modals/reimbursement-add/reimbursement-add.component';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class ClaimService {
   baseUrl = environment.apiUrl
   private claimUpdatedSource = new BehaviorSubject<Claim | null>(null);
   claimUpdated$ = this.claimUpdatedSource.asObservable();
-  bsModalRef?: BsModalRef<PaymentAddComponent>;
+  reimbursementBsModalRef?: BsModalRef<ReimbursementAddComponent>;
+  paymentBsModalRef?: BsModalRef<PaymentAddComponent>;
 
   constructor(private http: HttpClient, private modalService: BsModalService) { }
 
@@ -46,13 +48,25 @@ export class ClaimService {
   }
 
   addReimbursement(reimbursement: Reimbursement) {
-    return this.http.post(this.baseUrl + 'claims/reimbursement', reimbursement).pipe(
+    return this.http.post(this.baseUrl + 'claims/reimbursement', {
+      id: 0,
+      amount: reimbursement.amount,
+      dateSubmitted: reimbursement.dateSubmitted.toJSON().slice(0, 10),
+      dateReceived: null,
+      claimId: reimbursement.claimId
+    }).pipe(
       map((claim: any) => this.claimUpdatedSource.next(claim))
     );
   }
 
   updateReimbursement(reimbursement: Reimbursement) {
-    return this.http.put(this.baseUrl + 'claims/reimbursement', reimbursement).pipe(
+    return this.http.put(this.baseUrl + 'claims/reimbursement', {
+      id: reimbursement.id,
+      amount: reimbursement.amount,
+      dateSubmitted: reimbursement.dateSubmitted,
+      dateReceived: new Date().toJSON().slice(0, 10),
+      claimId: reimbursement.claimId
+    }).pipe(
       map(() => {
         this.getClaim(reimbursement.claimId).subscribe({
           next: claim => this.claimUpdatedSource.next(claim)
@@ -71,18 +85,35 @@ export class ClaimService {
     });
   }
 
-  addPaymentWithModalForm(claimId: number) {
-    this.bsModalRef = this.modalService.show(PaymentAddComponent)
-    this.bsModalRef.onHidden!.subscribe({
+  addReimbursementWithModalForm(claimId: number) {
+    this.reimbursementBsModalRef = this.modalService.show(ReimbursementAddComponent)
+    this.reimbursementBsModalRef.onHidden!.subscribe({
       next: () => {
-        const result = this.bsModalRef!.content!.result;
-        const payment = this.bsModalRef!.content!.paymentForm.value;
+        const result = this.reimbursementBsModalRef!.content!.result;
+        const reimbursement = this.reimbursementBsModalRef!.content!.reimbursementForm.value;
+
+        if (result && reimbursement) {
+          reimbursement.claimId = claimId;
+          this.addReimbursement(reimbursement).subscribe({
+            next: (claim: any) => this.claimUpdatedSource.next(claim)
+          });
+        }
+      }
+    });
+  }  
+
+  addPaymentWithModalForm(claimId: number) {
+    this.paymentBsModalRef = this.modalService.show(PaymentAddComponent)
+    this.paymentBsModalRef.onHidden!.subscribe({
+      next: () => {
+        const result = this.paymentBsModalRef!.content!.result;
+        const payment = this.paymentBsModalRef!.content!.paymentForm.value;
 
         if (result && payment) {
           payment.claimId = claimId;
           this.addPayment(payment).subscribe({
             next: (claim: any) => this.claimUpdatedSource.next(claim)
-          })
+          });
         }
       }
     });

@@ -17,12 +17,7 @@ export class ClaimDetailComponent implements OnInit {
 
   addReimbursement() {
     if (this.claim) {
-      this.claimService.addReimbursement({
-        id: 0,
-        amount: this.claim.amountOwed * 0.75,
-        dateSubmitted: new Date().toJSON().slice(0, 10),
-        claimId: this.claim.id
-      }).subscribe();
+      this.claimService.addReimbursementWithModalForm(this.claim.id);
     }
   }
 

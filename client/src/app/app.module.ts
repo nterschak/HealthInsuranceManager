@@ -29,6 +29,7 @@ import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { PaymentMethodCardComponent } from './payments/payment-method-card/payment-method-card.component';
 import { PaymentMethodListComponent } from './payments/payment-method-list/payment-method-list.component';
 import { PaymentMethodEditComponent } from './payments/payment-method-edit/payment-method-edit.component';
+import { ReimbursementAddComponent } from './modals/reimbursement-add/reimbursement-add.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { PaymentMethodEditComponent } from './payments/payment-method-edit/payme
     LoadingComponent,
     PaymentMethodCardComponent,
     PaymentMethodListComponent,
-    PaymentMethodEditComponent
+    PaymentMethodEditComponent,
+    ReimbursementAddComponent
   ],
   imports: [
     BrowserModule,
