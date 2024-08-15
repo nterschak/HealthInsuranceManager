@@ -2,7 +2,7 @@
     <h4 class="modal-title pull-left">Add Reimbursement</h4>
 </div>
 <div class="modal-body">
-    <form [formGroup]="reimbursementForm">
+    <form *ngIf="reimbursementForm" [formGroup]="reimbursementForm">
         <div class="form-group mb-3">
             <label for="amount">Amount</label>
             <input
@@ -17,7 +17,7 @@
                 class="text-danger"
                 *ngIf="reimbursementForm.get('amount')?.touched && !reimbursementForm.get('amount')?.valid"
             >
-                Required, must be greater than zero
+                Required, must be greater than zero, can't exceed amount owed
             </div>            
         </div>
 
@@ -41,6 +41,6 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-success me-3" [disabled]="!reimbursementForm.valid" (click)="submit()">Submit</button>
+    <button class="btn btn-success me-3" [disabled]="!reimbursementForm?.valid" (click)="submit()">Submit</button>
     <button class="btn btn-danger" (click)="cancel()">Cancel</button>
 </div>

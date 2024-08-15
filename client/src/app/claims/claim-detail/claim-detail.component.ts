@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Claim } from '../../_models/claim';
-import { Reimbursement } from 'src/app/_models/reimbursement';
 import { ClaimService } from 'src/app/_services/claim.service';
+import { PaymentAddConfiguration } from 'src/app/_configurations/payment-add-configuration';
 
 @Component({
   selector: 'app-claim-detail',
@@ -17,21 +17,48 @@ export class ClaimDetailComponent implements OnInit {
 
   addReimbursement() {
     if (this.claim) {
-      this.claimService.addReimbursementWithModalForm(this.claim.id);
+      this.claimService.addReimbursementWithModalForm(this.claim.id, this.getHraAmount(), this.claim.amountOwed);
     }
   }
 
   addPayment() {
     if (this.claim) {
-      this.claimService.addPaymentWithModalForm(this.claim.id);
+      this.claimService.addPaymentWithModalForm(this.claim.id, this.getPaymentAddConfiguration());
     }
   }
 
-  remainingBalance(): number {
+  getPaymentAddConfiguration(): PaymentAddConfiguration {
+    return {
+      initialAmount: this.getRemainingBalance(),
+      maxAmount: this.getRemainingBalance(),
+      initialPaymentMethodId: 0
+    }
+  }
+
+  getRemainingBalance(): number {
     if (this.claim?.payments) {
-      return this.claim.amountOwed - this.claim.payments.reduce((t, p) => t + p.amount, 0);
+      let amount = this.claim.amountOwed - this.claim.payments.reduce((t, p) => t + p.amount, 0);
+      return this.roundCurrency(amount);
     } else {
       return 0;
     }
+  }
+
+  getHraAmount() {
+    if (this.claim) {
+      let amount = this.claim.amountOwed * 0.75;
+      return this.roundCurrency(amount);
+    } else return 0;
+  }
+
+  getHsaAmount() {
+    if (this.claim) {
+      let amount = this.claim.amountOwed - this.getHraAmount();
+      return this.roundCurrency(amount);
+    } else return 0;
+  }
+
+  roundCurrency(amount: number): number {
+    return Math.round(amount * 100) / 100;
   }
 }

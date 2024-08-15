@@ -10,6 +10,7 @@ import { PaymentAddComponent } from '../modals/payment-add/payment-add.component
 import { ClaimParams } from '../_models/claimParams';
 import { ReimbursementAddComponent } from '../modals/reimbursement-add/reimbursement-add.component';
 import { DateService } from './date.service';
+import { PaymentAddConfiguration } from '../_configurations/payment-add-configuration';
 
 @Injectable({
   providedIn: 'root'
@@ -87,12 +88,15 @@ export class ClaimService {
     });
   }
 
-  addReimbursementWithModalForm(claimId: number) {
-    this.reimbursementBsModalRef = this.modalService.show(ReimbursementAddComponent)
+  addReimbursementWithModalForm(claimId: number, initialAmount: number, maxAmount: number) {
+    const config = {
+      initialState: { initialAmount, maxAmount }
+    };
+    this.reimbursementBsModalRef = this.modalService.show(ReimbursementAddComponent, config);
     this.reimbursementBsModalRef.onHidden!.subscribe({
       next: () => {
-        const result = this.reimbursementBsModalRef!.content!.result;
-        const reimbursement = this.reimbursementBsModalRef!.content!.reimbursementForm.value;
+        const result = this.reimbursementBsModalRef?.content?.result;
+        const reimbursement = this.reimbursementBsModalRef?.content?.reimbursementForm?.value;
 
         if (result && reimbursement) {
           reimbursement.claimId = claimId;
@@ -104,12 +108,12 @@ export class ClaimService {
     });
   }  
 
-  addPaymentWithModalForm(claimId: number) {
-    this.paymentBsModalRef = this.modalService.show(PaymentAddComponent)
+  addPaymentWithModalForm(claimId: number, config: PaymentAddConfiguration) {
+    this.paymentBsModalRef = this.modalService.show(PaymentAddComponent, { initialState: { config } })
     this.paymentBsModalRef.onHidden!.subscribe({
       next: () => {
-        const result = this.paymentBsModalRef!.content!.result;
-        const payment = this.paymentBsModalRef!.content!.paymentForm.value;
+        const result = this.paymentBsModalRef?.content?.result;
+        const payment = this.paymentBsModalRef?.content?.paymentForm?.value;
 
         if (result && payment) {
           payment.claimId = claimId;

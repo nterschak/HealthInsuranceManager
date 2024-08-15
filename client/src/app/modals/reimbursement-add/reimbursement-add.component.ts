@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
@@ -7,13 +7,17 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   templateUrl: './reimbursement-add.component.html',
   styleUrls: ['./reimbursement-add.component.css']
 })
-export class ReimbursementAddComponent {
-  reimbursementForm: FormGroup;
+export class ReimbursementAddComponent implements OnInit {
+  reimbursementForm?: FormGroup;
   result = false;
+  initialAmount = 0;
+  maxAmount = 0;
 
-  constructor(public bsModalRef: BsModalRef, private formBuilder: FormBuilder) {
+  constructor(public bsModalRef: BsModalRef, private formBuilder: FormBuilder) { }
+
+  ngOnInit(): void {
     this.reimbursementForm = this.formBuilder.group({
-      amount: [0, [Validators.required, Validators.min(0.01)]],
+      amount: [this.initialAmount, [Validators.required, Validators.min(0.01), Validators.max(this.maxAmount)]],
       dateSubmitted: [new Date(), Validators.required]
     });
   }

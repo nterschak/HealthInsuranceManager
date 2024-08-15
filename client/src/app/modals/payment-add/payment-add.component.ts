@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { Payment } from 'src/app/_models/payment';
+import { PaymentAddConfiguration } from 'src/app/_configurations/payment-add-configuration';
 import { PaymentMethod } from 'src/app/_models/payment-method';
 import { PaymentService } from 'src/app/_services/payment.service';
 
@@ -10,10 +10,11 @@ import { PaymentService } from 'src/app/_services/payment.service';
   templateUrl: './payment-add.component.html',
   styleUrls: ['./payment-add.component.css']
 })
-export class PaymentAddComponent {
-  paymentForm: FormGroup;
+export class PaymentAddComponent implements OnInit {
+  paymentForm?: FormGroup;
   paymentMethods: PaymentMethod[] = [];
   result = false;
+  config: PaymentAddConfiguration = {} as PaymentAddConfiguration;
 
   constructor(public bsModalRef: BsModalRef, private paymentService: PaymentService,
     private formBuilder: FormBuilder
@@ -21,10 +22,13 @@ export class PaymentAddComponent {
     this.paymentService.getPaymentMethods().subscribe({
       next: paymentMethods => this.paymentMethods = paymentMethods
     });
+  }
+
+  ngOnInit(): void {
     this.paymentForm = this.formBuilder.group({
-      amount: [null, [Validators.required, Validators.min(0.01)]],
+      amount: [this.config.initialAmount, [Validators.required, Validators.min(0.01), Validators.max(this.config.maxAmount)]],
       datePaid: [new Date(), Validators.required],
-      paymentMethodId: [0, [Validators.required, Validators.min(1)]]
+      paymentMethodId: [this.config.initialPaymentMethodId, [Validators.required, Validators.min(1)]]
     });
   }
 

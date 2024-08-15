@@ -2,7 +2,7 @@
     <h4 class="modal-title pull-left">Add Payment</h4>
 </div>
 <div class="modal-body">
-    <form [formGroup]="paymentForm">
+    <form *ngIf="paymentForm" [formGroup]="paymentForm">
         <div class="form-group mb-3">
             <label for="amount">Amount</label>
             <input
@@ -17,7 +17,7 @@
                 class="text-danger"
                 *ngIf="paymentForm.get('amount')?.touched && !paymentForm.get('amount')?.valid"
             >
-                Required, must be greater than zero
+                Required, must be greater than zero and can't exceed remaining amount owed'
             </div>            
         </div>
 
@@ -61,6 +61,6 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-success me-3" [disabled]="!paymentForm.valid" (click)="submit()">Submit</button>
+    <button class="btn btn-success me-3" [disabled]="!paymentForm?.valid" (click)="submit()">Submit</button>
     <button class="btn btn-danger" (click)="cancel()">Cancel</button>
 </div>
