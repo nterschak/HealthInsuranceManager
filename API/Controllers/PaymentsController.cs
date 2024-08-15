@@ -73,5 +73,47 @@ namespace API.Controllers
 
             return BadRequest("Problem removing payment method");
         }     
+
+        [HttpGet("payment-rule")]
+        public async Task<List<PaymentRule>> GetPaymentRules()
+        {
+            return await _uow.PaymentRepository.GetAllPaymentRules();
+        }
+
+        [HttpGet("payment-rule/{id}")]
+        public async Task<ActionResult<PaymentRule>> GetPaymentRuleById(int id)
+        {
+            var rule = await _uow.PaymentRepository.GetPaymentRuleById(id);
+            if (rule == null) return NotFound();
+            return rule;
+        }           
+
+        [HttpPost("payment-rule")]
+        public async Task<ActionResult> AddPaymentRule(PaymentRule newPaymentRule)
+        {
+            var paymentMethod = await _uow.PaymentRepository.GetPaymentMethodById(newPaymentRule.PaymentMethodId);
+
+            if (paymentMethod == null) return BadRequest("Payment method does not exist.");
+
+            _uow.PaymentRepository.AddPaymentRule(newPaymentRule);
+
+            if (await _uow.Complete())
+                return CreatedAtAction(nameof(GetPaymentRuleById), new {Id = newPaymentRule.Id}, newPaymentRule);
+
+            return BadRequest("Problem adding new payment rule.");
+        }
+
+        [HttpDelete("payment-rule/{id}")]
+        public async Task<ActionResult> RemovePaymentRule(int id)
+        {
+            var paymentRule = await _uow.PaymentRepository.GetPaymentRuleById(id);
+            if (paymentRule == null) return NotFound();
+
+            _uow.PaymentRepository.RemovePaymentRule(paymentRule);
+
+            if (await _uow.Complete()) return NoContent();
+
+            return BadRequest("Problem removing payment rule");
+        }             
     }
 }

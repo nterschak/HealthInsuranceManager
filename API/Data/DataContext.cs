@@ -15,5 +15,6 @@ namespace API.Data
         public DbSet<Reimbursement> Reimbursements { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<PaymentRule> PaymentRules { get; set; }
     }
 }

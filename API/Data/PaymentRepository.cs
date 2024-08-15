@@ -56,5 +56,27 @@ namespace API.Data
         {
             _context.PaymentMethods.Remove(paymentMethod);
         }
+
+        public async Task<List<PaymentRule>> GetAllPaymentRules()
+        {
+            return await _context.PaymentRules.ToListAsync();
+        }
+
+        public async Task<PaymentRule> GetPaymentRuleById(int id)
+        {
+            return await _context.PaymentRules
+                .Include(p => p.PaymentMethod)
+                .SingleOrDefaultAsync(p => p.Id == id);        
+        }
+
+        public void AddPaymentRule(PaymentRule paymentRule)
+        {
+            _context.PaymentRules.Add(paymentRule);
+        }
+
+        public void RemovePaymentRule(PaymentRule paymentRule)
+        {
+            _context.PaymentRules.Remove(paymentRule);
+        }
     }
 }
