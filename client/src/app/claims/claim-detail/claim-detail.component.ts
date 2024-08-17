@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Claim } from '../../_models/claim';
 import { ClaimService } from 'src/app/_services/claim.service';
 import { PaymentAddConfiguration } from 'src/app/_configurations/payment-add-configuration';
+import { PaymentRule } from 'src/app/_models/payment-rule';
 
 @Component({
   selector: 'app-claim-detail',
@@ -21,18 +22,36 @@ export class ClaimDetailComponent implements OnInit {
     }
   }
 
-  addPayment() {
+  addPayment(config?: PaymentAddConfiguration) {
     if (this.claim) {
-      this.claimService.addPaymentWithModalForm(this.claim.id, this.getPaymentAddConfiguration());
+      if (!config) config = this.getDefaultPaymentAddConfiguration();
+      this.claimService.addPaymentWithModalForm(this.claim.id, config);
     }
   }
 
-  getPaymentAddConfiguration(): PaymentAddConfiguration {
+  addPaymentFromRule(rule: PaymentRule) {
+    if (this.claim) {
+      let config = this.getPaymentAddConfigurationFromRule(rule)
+      this.addPayment(config);
+    }
+  }
+
+  getDefaultPaymentAddConfiguration(): PaymentAddConfiguration {
+    const remainingBalance = this.getRemainingBalance();
     return {
-      initialAmount: this.getRemainingBalance(),
-      maxAmount: this.getRemainingBalance(),
+      initialAmount: remainingBalance,
+      maxAmount: remainingBalance,
       initialPaymentMethodId: 0
     }
+  }
+
+  getPaymentAddConfigurationFromRule(rule: PaymentRule): PaymentAddConfiguration {
+    const remainingBalance = this.getRemainingBalance();
+    return {
+      initialAmount: this.roundCurrency(remainingBalance * rule.percentage / 100),
+      maxAmount: remainingBalance,
+      initialPaymentMethodId: rule.paymentMethodId
+    };
   }
 
   getRemainingBalance(): number {
@@ -44,14 +63,14 @@ export class ClaimDetailComponent implements OnInit {
     }
   }
 
-  getHraAmount() {
+  getHraAmount(): number {
     if (this.claim) {
       let amount = this.claim.amountOwed * 0.75;
       return this.roundCurrency(amount);
     } else return 0;
   }
 
-  getHsaAmount() {
+  getHsaAmount(): number {
     if (this.claim) {
       let amount = this.claim.amountOwed - this.getHraAmount();
       return this.roundCurrency(amount);

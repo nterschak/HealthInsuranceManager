@@ -132,6 +132,6 @@
     <div *ngIf="claim.amountOwed > 0 && claim.payments" class="mt-3">
         <h5>Payments</h5>
         <app-payments-summary [payments]="claim.payments" [amountOwed]="claim.amountOwed"></app-payments-summary>
-        <button class="btn btn-primary ms-3" (click)="addPayment()">Add Payment</button>
+        <app-payment-add-dropdown (selected)="addPaymentFromRule($event)"></app-payment-add-dropdown>
     </div>
 </div>

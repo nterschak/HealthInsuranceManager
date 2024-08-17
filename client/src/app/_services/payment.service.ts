@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { PaymentMethod } from '../_models/payment-method';
+import { PaymentRule } from '../_models/payment-rule';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,9 @@ export class PaymentService {
 
   removePaymentMethod(id: number) {
     return this.http.delete(this.baseUrl + 'payments/payment-method/' + id);
+  }
+
+  getPaymentRules() {
+    return this.http.get<PaymentRule[]>(this.baseUrl + 'payments/payment-rule');
   }
 }

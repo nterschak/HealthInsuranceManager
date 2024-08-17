@@ -1,0 +1,16 @@
+<div class="btn-group" dropdown>
+  <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+          aria-controls="dropdown-basic">
+    Add Payment <span class="caret"></span>
+  </button>
+  <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+      role="menu" aria-labelledby="button-basic">
+    <li *ngFor="let rule of paymentRules" role="menuitem">
+        <a class="dropdown-item" (click)="select(rule)">{{rule.description}}</a>
+    </li>
+    <li class="divider dropdown-divider"></li>
+    <li role="menuitem">
+      <a class="dropdown-item" (click)="select(defaultRule)">{{defaultRule.description}}</a>
+    </li>
+  </ul>
+</div>

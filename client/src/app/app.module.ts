@@ -30,6 +30,8 @@ import { PaymentMethodCardComponent } from './payments/payment-method-card/payme
 import { PaymentMethodListComponent } from './payments/payment-method-list/payment-method-list.component';
 import { PaymentMethodEditComponent } from './payments/payment-method-edit/payment-method-edit.component';
 import { ReimbursementAddComponent } from './modals/reimbursement-add/reimbursement-add.component';
+import { PaymentAddDropdownComponent } from './claims/payment-add-dropdown/payment-add-dropdown.component';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { ReimbursementAddComponent } from './modals/reimbursement-add/reimbursem
     PaymentMethodCardComponent,
     PaymentMethodListComponent,
     PaymentMethodEditComponent,
-    ReimbursementAddComponent
+    ReimbursementAddComponent,
+    PaymentAddDropdownComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,7 @@ import { ReimbursementAddComponent } from './modals/reimbursement-add/reimbursem
     }),
     ModalModule.forRoot(),
     ReactiveFormsModule,
+    BsDropdownModule.forRoot(),
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
