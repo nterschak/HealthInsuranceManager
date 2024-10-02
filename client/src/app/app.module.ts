@@ -32,6 +32,9 @@ import { PaymentMethodEditComponent } from './payments/payment-method-edit/payme
 import { ReimbursementAddComponent } from './modals/reimbursement-add/reimbursement-add.component';
 import { PaymentAddDropdownComponent } from './claims/payment-add-dropdown/payment-add-dropdown.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { PaymentRuleListComponent } from './payments/payment-rule-list/payment-rule-list.component';
+import { PaymentsHomeComponent } from './payments/payments-home/payments-home.component';
+import { PaymentRuleEditComponent } from './payments/payment-rule-edit/payment-rule-edit.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +59,10 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     PaymentMethodListComponent,
     PaymentMethodEditComponent,
     ReimbursementAddComponent,
-    PaymentAddDropdownComponent
+    PaymentAddDropdownComponent,
+    PaymentRuleListComponent,
+    PaymentsHomeComponent,
+    PaymentRuleEditComponent
   ],
   imports: [
     BrowserModule,

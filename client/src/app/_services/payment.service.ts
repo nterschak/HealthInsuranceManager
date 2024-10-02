@@ -35,4 +35,20 @@ export class PaymentService {
   getPaymentRules() {
     return this.http.get<PaymentRule[]>(this.baseUrl + 'payments/payment-rule');
   }
+
+  getPaymentRuleById(id: number) {
+    return this.http.get<PaymentRule>(this.baseUrl + 'payments/payment-rule/' + id);
+  }
+
+  addPaymentRule(paymentRule: PaymentRule) {
+    return this.http.post(this.baseUrl + 'payments/payment-rule', paymentRule);
+  }
+
+  updatePaymentRule(paymentRule: PaymentRule) {
+    return this.http.put(this.baseUrl + 'payments/payment-rule', paymentRule);
+  }  
+
+  removePaymentRule(id: number) {
+    return this.http.delete(this.baseUrl + 'payments/payment-rule/' + id);
+  }
 }

@@ -1,0 +1,33 @@
+<h2>Payment Rules</h2>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Description</th>
+        <th scope="col">Percentage</th>
+        <th scope="col">Payment Method</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rule of paymentRules">
+        <td>{{rule.description}}</td>
+        <td>{{rule.percentage}}%</td>
+        <td>{{rule.paymentMethod?.description}}</td>
+        <td>
+          <button
+            routerLink="edit-rule/{{rule.id}}"
+            class="btn btn-secondary me-2"
+          >
+          <i class="fa fa-pencil-square-o"></i>
+          </button>
+          <button
+            (click)="removePaymentRule(rule)"
+            class="btn btn-danger"
+          >
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn btn-success" routerLink="add-rule"><i class="fa fa-plus me-2"></i>Add New Payment Rule</button>

@@ -49,7 +49,7 @@ export class PaymentMethodEditComponent implements OnInit {
     this.paymentService.addPaymentMethod(this.paymentMethodForm.value).subscribe({
       next: (paymentMethod: any) => {
         this.toastrService.success(`Payment method ${paymentMethod.lastFourDigits} added!`);
-        this.router.navigate(['payment-methods']);
+        this.router.navigate(['payments']);
       }
     });
   }
@@ -59,7 +59,7 @@ export class PaymentMethodEditComponent implements OnInit {
       next: () => {
         const lastFourDigits = this.paymentMethodForm.get('lastFourDigits')?.value;
         this.toastrService.success(`Payment method ${lastFourDigits} updated!`);
-        this.router.navigate(['payment-methods']);
+        this.router.navigate(['payments']);
       }
     })
   }

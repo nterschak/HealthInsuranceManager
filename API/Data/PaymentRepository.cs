@@ -59,7 +59,9 @@ namespace API.Data
 
         public async Task<List<PaymentRule>> GetAllPaymentRules()
         {
-            return await _context.PaymentRules.ToListAsync();
+            return await _context.PaymentRules
+                .Include(p => p.PaymentMethod)
+                .ToListAsync();
         }
 
         public async Task<PaymentRule> GetPaymentRuleById(int id)

@@ -103,6 +103,23 @@ namespace API.Controllers
             return BadRequest("Problem adding new payment rule.");
         }
 
+        [HttpPut("payment-rule")]
+        public async Task<ActionResult> UpdatePaymentRule(PaymentRule updatedPaymentRule)
+        {
+            var rule = await _uow.PaymentRepository.GetPaymentRuleById(updatedPaymentRule.Id);
+            if (rule == null) return NotFound();
+
+            var paymentMethod = await _uow.PaymentRepository.GetPaymentMethodById(updatedPaymentRule.PaymentMethodId);
+            if (paymentMethod == null) return BadRequest("Payment method does not exist.");   
+
+            _mapper.Map(updatedPaymentRule, rule);
+            rule.PaymentMethod = paymentMethod;
+
+            if (await _uow.Complete()) return NoContent();
+
+            return BadRequest("Problem updating payment rule");
+        }        
+
         [HttpDelete("payment-rule/{id}")]
         public async Task<ActionResult> RemovePaymentRule(int id)
         {
